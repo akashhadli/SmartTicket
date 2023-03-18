@@ -8,8 +8,6 @@ const {
   resetPassword,
   deleteAdmin,
   approveOperator,
-  copy,
-  copy1,
 } = require('../../controllers/Admin/admin');
 
 router.route('/login').post(login);
