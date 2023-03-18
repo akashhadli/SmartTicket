@@ -9,6 +9,7 @@ var rutid = 0;
 
 //register operator
 exports.createOperator = (req, res) => {
+  let opid = 0;
   let tblOperator = req.body;
   opid = opid + 1;
   var OperId = `OP${opid}`;
