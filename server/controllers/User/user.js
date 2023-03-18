@@ -67,9 +67,10 @@ const insertTblOtp = (id, mobile, flag) => {
 
 // USER PROFILE DETAILS
 exports.profile = (req, res) => {
+  const id = req.body.id;
   let query =
-    'SELECT Uname, Ugender, Umobile, Uemail, UDoB, UAddr1, UAddr2, Ucity, UPinCode FROM tblCommuter';
-  db.query(query, (err, results) => {
+    'SELECT Uname, Ugender, Umobile, Uemail, UDoB, UAddr1, UAddr2, Ucity, UPinCode, Uaadhar FROM tblCommuter Where UserId = ?';
+  db.query(query, [id], (err, results) => {
     if (!err) {
       res.send(results);
     } else {

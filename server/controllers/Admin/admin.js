@@ -15,7 +15,7 @@ exports.login = (req, res) => {
           (err, response) => {
             console.log(response);
             if (response) {
-              res.status(201).json({ status: 201, data: results[0].Status });
+              res.status(201).json({ status: 201, data: results[0] });
             } else {
               res.status(201).json({ message: 'Wrong username/password!!' });
             }
@@ -59,7 +59,7 @@ exports.createAdmin = (req, res) => {
 
 const addAuth = (AdminId) => {
   var query =
-    'INSERT INTO tblAuth(AuthID, MobileNo, Email, Password, Status) SELECT AdminId, Amobile, Aemail, Apassword, Status FROM tblLPAdm WHERE AdminId = ?';
+    'INSERT INTO tblAuth(AuthID, MobileNo, Email, Password, Flag) SELECT AdminId, Amobile, Aemail, Apassword, Flag FROM tblLPAdm WHERE AdminId = ?';
   db.query(query, [AdminId], (err, results) => {
     if (!err) {
       return console.log(results);
@@ -131,7 +131,7 @@ exports.approveOperator = (req, res) => {
 
 const addAuth1 = (OperId) => {
   var query =
-    'INSERT INTO tblAuth(AuthID, MobileNo, Email, Password, Status) SELECT OperId, OperPhone, OperEmail, OperPassword, Status FROM tblOperator WHERE OperId= ?';
+    'INSERT INTO tblAuth(AuthID, MobileNo, Email, Password, Flag) SELECT OperId, OperPhone, OperEmail, OperPassword, Flag FROM tblOperator WHERE OperId= ?';
   db.query(query, [OperId], (err, results) => {
     if (!err) {
       return console.log(results);
