@@ -81,9 +81,9 @@ exports.profile = (req, res) => {
 
 // EDIT PROFILE
 exports.editprofile = (req, res) => {
-  let tblCommuter = req.body;
-  let query = 'UPDATE tblCommuter SET Uemail = ? WHERE UserId = ?';
-  db.query(query, [tblCommuter.UserId, tblCommuter.Uemail], (err, results) => {
+  let data = req.body;
+  let query = 'UPDATE tblCommuter SET Uname = ?, Ugender = ?, Uemail = ?, UAddr1 = ?, UAddr2 = ?, Ucity = ?, UPinCode = ?, Uaadhar = ? WHERE UserId = ?';
+  db.query(query, [data.Uname, data.Ugender, data.Uemail, data.UAddr1, data.UAddr2, data.Ucity, data.UPinCode, data.Uaadhar, data.id], (err, results) => {
     if (!err) {
       return res.status(200).json({ message: 'Profile Updated' });
     } else {
