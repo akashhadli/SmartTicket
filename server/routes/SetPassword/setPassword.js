@@ -3,6 +3,6 @@ const router = express.Router();
 
 const { setPassword } = require('../../controllers/SetPassword/setPassword');
 
-router.route('/Password').patch(setPassword);
+router.route('/Password').post(setPassword);
 
 module.exports = router;
