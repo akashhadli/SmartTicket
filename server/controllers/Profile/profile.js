@@ -15,7 +15,9 @@ exports.Profile = (req, res) => {
 				res.send(err);
 			}
 		});
-	} else if (flag === 'E') {
+	}
+	// EMPLOYEE PROFILE DEATAILS
+	else if (flag === 'E') {
 		{
 			let eid = profdata.id;
 			let query =
