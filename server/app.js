@@ -12,7 +12,9 @@ const employeeRoute = require('./routes/Employee/employee');
 const operatorRoute = require('./routes/Operator/operator');
 const faqsRoute = require('./routes/FAQs/FAQs');
 const otpRoute = require('./routes/OTP/otp');
-const setRoute = require('./routes/SetPassword/setPassword');
+const profileRoute = require('./routes/Profile/profile');
+const setPassRoute = require('./routes/SetPassword/setPassword');
+const chngPassRoute = require('./routes/ChngPassword/chngPassword');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -26,8 +28,10 @@ app.use('/operator', operatorRoute);
 app.use('/faqs', faqsRoute);
 app.use('/find', findRoute);
 app.use('/otp', otpRoute);
-app.use('/set', setRoute);
+app.use('/profile', profileRoute);
+app.use('/set', setPassRoute);
+app.use('/chng', chngPassRoute);
 
 app.listen(port, () => {
-  console.log(`server listening on ${port}`);
+	console.log(`server listening on ${port}`);
 });
