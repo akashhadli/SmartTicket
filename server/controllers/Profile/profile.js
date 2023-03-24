@@ -7,28 +7,28 @@ exports.Profile = (req, res) => {
 	if (flag === 'U') {
 		let uid = profdata.id;
 		let query =
-			'SELECT Uname, Ugender, Umobile, Uemail, UDoB, UAddr1, UAddr2, Ucity, UPinCode, Uaadhar FROM tblCommuter Where UserId = ?';
+			'SELECT Uname, Ugender, Umobile, UDoB, UAddr1, UAddr2, Ucity, UPinCode, Uaadhar FROM tblCommuter WHERE UserId = ?';
 		db.query(query, [uid], (err, results) => {
+			console.log(results);
 			if (!err) {
-				res.send(results[0]);
+				res.json(results[0]);
 			} else {
 				res.send(err);
 			}
 		});
 	}
-	// EMPLOYEE PROFILE DEATAILS
+	// 	EMPLOYEE PROFILE DETAILS
 	else if (flag === 'E') {
-		{
-			let eid = profdata.id;
-			let query =
-				'SELECT EmpName, EmpMobile, EmpAddr1, EmpAddr2, EmpCity, EmpPinCode, EmpAadhar FROM tblEmployee Where EmpId = ?';
-			db.query(query, [eid], (err, results) => {
-				if (!err) {
-					res.send(results[0]);
-				} else {
-					res.send(err);
-				}
-			});
-		}
+		let eid = profdata.id;
+		let query =
+			'SELECT EmpName, EmpMobile, EmpDOB, EmpAddr1, EmpAddr2, EmpCity, EmpPinCode, EmpAadhar FROM tblEmployee WHERE EmpId = ?';
+		db.query(query, [eid], (err, results) => {
+			console.log(results);
+			if (!err) {
+				res.json(results[0]);
+			} else {
+				res.send(err);
+			}
+		});
 	}
 };

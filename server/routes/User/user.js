@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  register,
-  profile,
-  editprofile,
+	register,
+	profile,
+	editprofile,
 } = require('../../controllers/User/user');
 
 router.route('/register').post(register);
