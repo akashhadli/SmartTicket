@@ -1,13 +1,14 @@
 const db = require('../../db/db');
 
-// USER PROFILE DETAILS
+// PROFILE DETAILS
 exports.Profile = (req, res) => {
 	let profdata = req.body;
 	const flag = profdata.flag;
+	// USER PROFILE DETAILS
 	if (flag === 'U') {
 		let uid = profdata.id;
 		let query =
-			'SELECT Uname, Ugender, Umobile, UDoB, UAddr1, UAddr2, Ucity, UPinCode, Uaadhar FROM tblCommuter WHERE UserId = ?';
+			'SELECT UserId, Uname, Ugender, Umobile, UDoB, UAddr1, UAddr2, Ucity, UPinCode, Uaadhar, Flag FROM tblCommuter WHERE UserId = ?';
 		db.query(query, [uid], (err, results) => {
 			console.log(results);
 			if (!err) {
@@ -21,7 +22,7 @@ exports.Profile = (req, res) => {
 	else if (flag === 'E') {
 		let eid = profdata.id;
 		let query =
-			'SELECT EmpName, EmpMobile, EmpDOB, EmpAddr1, EmpAddr2, EmpCity, EmpPinCode, EmpAadhar FROM tblEmployee WHERE EmpId = ?';
+			'SELECT EmpId, EmpName, EmpMobile, EmpDOB, EmpAddr1, EmpAddr2, EmpCity, EmpPinCode, EmpAadhar, Flag FROM tblEmployee WHERE EmpId = ?';
 		db.query(query, [eid], (err, results) => {
 			console.log(results);
 			if (!err) {
@@ -30,5 +31,38 @@ exports.Profile = (req, res) => {
 				res.send(err);
 			}
 		});
+	}
+};
+
+// EDIT PROFILE
+exports.Edit = (req, res) => {
+	let editData = req.body;
+	const flag = editData.flag;
+	// EDIT USER PROFILE
+	if (flag === 'U') {
+		let uid = editData.Id;
+		let query =
+			'UPDATE tblCommuter SET Uname = ?, Ugender = ?, UAddr1 = ?, UAddr2 = ?, Ucity = ?, UPinCode = ?, Uphoto = ?, Uaadhar = ? WHERE UserId = ?';
+		db.query(
+			query,
+			[
+				editData.Name,
+				editData.Gender,
+				editData.Address1,
+				editData.Address2,
+				editData.City,
+				editData.Pin,
+				editData.Img,
+				editData.Aadhar,
+				uid,
+			],
+			(err, results) => {
+				if (!err) {
+					res.json({ message: 'Edit Success' });
+				} else {
+					res.json({ message: 'Edit Failure' });
+				}
+			}
+		);
 	}
 };
