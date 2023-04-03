@@ -15,6 +15,8 @@ const otpRoute = require('./routes/OTP/otp');
 const profileRoute = require('./routes/Profile/profile');
 const setPassRoute = require('./routes/SetPassword/setPassword');
 const chngPassRoute = require('./routes/ChngPassword/chngPassword');
+const setRouteRoute = require('./routes/SetRoute/setRoute');
+const getRoute = require('./routes/GetRoute/getRoute');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -31,6 +33,8 @@ app.use('/otp', otpRoute);
 app.use('/profile', profileRoute);
 app.use('/set', setPassRoute);
 app.use('/chng', chngPassRoute);
+app.use('/setRoute', setRouteRoute);
+app.use('/getRoute', getRoute);
 
 app.listen(port, () => {
 	console.log(`server listening on ${port}`);
