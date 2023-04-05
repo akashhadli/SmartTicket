@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { Link, useParams } from 'react-router-dom';
+import moment from "moment";
 import Sidebar from './Sidebar';
+
 const Operview = () => {
+  
+const history = useNavigate();
   const [data, setData] = useState([]);
   const { OperId } = useParams();
   const getUserData = async () => {
-    const res = await axios.get(`https://amsweets.in/operator/${OperId}`);
+    const res = await axios.get(`http://localhost:8004/operator/${OperId}`);
 
     if (res.data.status === 201) {
       setData(res.data.data);
@@ -17,10 +22,12 @@ const Operview = () => {
 
   const handleSub = async () => {
     const res = await axios.patch(
-      `https://amsweets.in/admin/approve/${OperId}`,
+      `http://localhost:8004/admin/approve/${OperId}`,
     );
     if (res.data.status === 201) {
       alert('Operator Approved');
+      setTimeout(() => history('/dashboard'), 500);
+      return;
     } else {
       console.log('error');
     }
@@ -60,6 +67,9 @@ const Operview = () => {
                       </label>
                       <label className='p-1 my-1 text-start'>
                         Contact Email:<span className='ml-2'>{el.OperContactEmail}</span>
+                      </label>
+                      <label className='p-1 my-1 text-start'>
+                        Created Date:<span className='ml-2'>{moment(el.OperCreatedDate).format("DD-MM-YYYY")}</span>
                       </label>
                       <div className='flex flex-row justify-center m-4'>
                         <Link to={'/opertable'}>

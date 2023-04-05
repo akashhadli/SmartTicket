@@ -1,9 +1,12 @@
 import React from 'react'
 import {HiOutlineViewGrid, HiOutlineLogout} from 'react-icons/hi';
+import {GrBus} from 'react-icons/gr';
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo.jpg';
-import {IoIosPeople} from 'react-icons/io';
 import{AiFillSetting} from 'react-icons/ai';
+import{FaMapMarkedAlt} from 'react-icons/fa';
+import {BsFillXDiamondFill} from 'react-icons/bs';
+import{TbRoute} from 'react-icons/tb';
 import{MdApproval} from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,15 +31,27 @@ const Opersidebar = () => {
         <ul className='p-2'>
         <Link to="/operdashboard">
           <li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
-           <HiOutlineViewGrid /><span className='ml-1'>Dashboard</span>
+           <HiOutlineViewGrid /><span className='ml-2'>Dashboard</span>
           </li></Link>
           <Link to="/empregister">
           <li className='flex justify-start items-center  p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
-            <MdApproval/><span className='ml-1'>Add Employee</span>
+            <MdApproval/><span className='ml-2'>Employee</span>
           </li></Link>
-          <Link to="/asregister">
+          <Link to="/astregister">
           <li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
-           <IoIosPeople/><span className='ml-1'>Add Asset</span> 
+           <GrBus/><span className='ml-2'>Asset</span> 
+          </li></Link>
+          <Link to="/stageregister">
+          <li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
+           <BsFillXDiamondFill/><span className='ml-2'>Stage</span> 
+          </li></Link>
+          <Link to="/routeregister">
+          <li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
+           <TbRoute/><span className='ml-2'>Route</span> 
+          </li></Link>
+          <Link to="/routemap">
+          <li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
+           <FaMapMarkedAlt/><span className='ml-2'>Route Map</span> 
           </li></Link>
         </ul>
         </div>
@@ -44,10 +59,10 @@ const Opersidebar = () => {
           <hr/>
          <ul className='p-1'>
          <li className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
-            <AiFillSetting/><span className='ml-1'>Settings</span> 
+            <AiFillSetting/><span className='ml-2'>Settings</span> 
           </li>
           <li className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer' onClick={handlesub}>
-           <HiOutlineLogout/><span className='ml-1'>Logout</span>
+           <HiOutlineLogout/><span className='ml-2'>Logout</span>
           </li>
          </ul>
         </div>

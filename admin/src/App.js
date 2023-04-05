@@ -1,12 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Asregister from './components/Asregister';
+import Astregister from './components/Astregister';
 import Dashboard from './components/Dashboard';
 import Empregister from './components/Empregister';
 import Operdashboard from './components/Operdashboard';
 import Opertable from './components/Opertable';
+import Stageregister from './components/Stageregister';
 import Operview from './components/Operview';
 import Register from './components/Register';
 import SignIn from './components/SignIn';
+import Routeregister from './components/Routeregister';
+import RouteStageMap from './components/RouteStageMap';
 
 function App() {
   return (
@@ -21,7 +24,10 @@ function App() {
         <Route path='/approve/:OperId' element={<Opertable />} />
         <Route path='/operator/:OperId' element={<Operview />} />
         <Route path='/empregister' element={<Empregister />} />
-        <Route path='/asregister' element={<Asregister />} />
+        <Route path='/astregister' element={<Astregister />} />
+        <Route path='/stageregister' element={<Stageregister/>} />
+        <Route path='/routeregister' element={<Routeregister/>} /> 
+        <Route path='/routemap' element={<RouteStageMap/>} />
       </Routes>
     </BrowserRouter>
   );

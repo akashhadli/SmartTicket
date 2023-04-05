@@ -32,7 +32,7 @@ const Sidebar = () => {
         </li></Link>
         <Link to="/opertable">
         <li className='flex justify-start items-center  p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
-          <MdApproval/><span className='ml-1'>Approve Operator</span>
+          <MdApproval/><span className='ml-1'>Operator</span>
         </li></Link>
         <li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
          <IoIosPeople/><span className='ml-1'>Team</span> 

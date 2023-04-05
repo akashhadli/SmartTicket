@@ -7,7 +7,7 @@ const Opertable = () => {
   const [data, setData] = useState('');
 
   const getUserdata = async () => {
-    const res = await axios.get('https://amsweets.in/operator/read');
+    const res = await axios.get('http://localhost:8004/operator/read');
 
     if (res.data.status === 201) {
       setData(res.data.data);
