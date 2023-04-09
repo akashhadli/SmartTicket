@@ -8,7 +8,7 @@ exports.Profile = (req, res) => {
 	if (flag === 'U') {
 		let uid = profdata.id;
 		let query =
-			'SELECT UserId, Uname, Ugender, Umobile, UDoB, UAddr1, UAddr2, Ucity, UPinCode, Uaadhar, Flag FROM tblCommuter WHERE UserId = ?';
+			'SELECT UserId, Uname, Ugender, Umobile, Uemail, UDoB, UAddr1, UAddr2, Ucity, UPinCode, Uaadhar, Flag FROM tblCommuter WHERE UserId = ?';
 		db.query(query, [uid], (err, results) => {
 			console.log(results);
 			if (!err) {
@@ -42,12 +42,13 @@ exports.Edit = (req, res) => {
 	if (flag === 'U') {
 		let uid = editData.Id;
 		let query =
-			'UPDATE tblCommuter SET Uname = ?, Ugender = ?, UAddr1 = ?, UAddr2 = ?, Ucity = ?, UPinCode = ?, Uphoto = ?, Uaadhar = ? WHERE UserId = ?';
+			'UPDATE tblCommuter SET Uname = ?, Ugender = ?, Uemail = ?, UAddr1 = ?, UAddr2 = ?, Ucity = ?, UPinCode = ?, Uphoto = ?, Uaadhar = ? WHERE UserId = ?';
 		db.query(
 			query,
 			[
 				editData.Name,
 				editData.Gender,
+				editData.Email,
 				editData.Address1,
 				editData.Address2,
 				editData.City,
