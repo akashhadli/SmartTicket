@@ -3,14 +3,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
-import Sidebar from './Sidebar';
+import Opersidebar from './Opersidebar';
 
-const Operview = () => {
+const Astview = () => {
 	const history = useNavigate();
 	const [data, setData] = useState([]);
-	const { OperId } = useParams();
-	const getUserData = async () => {
-		const res = await axios.get(`https://amsweets.in/operator/${OperId}`);
+	const { AstId } = useParams();
+	const getAssetData = async () => {
+		const res = await axios.get(`https://amsweets.in/operator/asset/${AstId}`);
 
 		if (res.data.status === 201) {
 			setData(res.data.data);
@@ -21,11 +21,11 @@ const Operview = () => {
 
 	const handleSub = async () => {
 		const res = await axios.patch(
-			`https://amsweets.in/admin/approve/${OperId}`
+			`https://amsweets.in/operator/delete/${AstId}`
 		);
 		if (res.data.status === 201) {
-			alert('Operator Approved');
-			setTimeout(() => history('/dashboard'), 500);
+			alert(res.data.data);
+			history('/operdashboard');
 			return;
 		} else {
 			console.log('error');
@@ -33,60 +33,64 @@ const Operview = () => {
 	};
 
 	useEffect(() => {
-		getUserData();
+		getAssetData();
 	}, []);
-
 	return (
 		<>
 			<div className='flex flex-row gap-4'>
-				<Sidebar />
-				<div className='container  my-8 h-full w-auto p-4 ml-[30%] pr-6 border'>
-					<h1 className='text-4xl text-pink-500 ml-4 py-6'>Operator Detail</h1>
+				<Opersidebar />
+				<div className='container  my-8 h-full w-[40%] p-4 mx-auto pr-6 border'>
+					<h1 className='text-center text-4xl text-pink-500  py-6'>
+						Asset Detail
+					</h1>
 					{data.length > 0
 						? data.map((el, i) => {
 								return (
 									<>
-										<div className='flex flex-col ml-4' key={el.OperId}>
+										<div className='flex flex-col ml-4' key={i + 1}>
 											<label className='p-1 my-1 text-start'>
-												Company Name:{' '}
-												<span className='ml-2'>{el.OperName}</span>
+												Asset Registration No:{' '}
+												<span className='ml-2'>{el.AstRegNo}</span>
 											</label>
 											<label className='p-1 my-1 text-start'>
-												Company Email:{' '}
-												<span className='ml-2'>{el.OperEmail}</span>
+												Asset Model: <span className='ml-2'>{el.AstName}</span>
 											</label>
 											<label className='p-1 my-1 text-start'>
-												GST No: <span className='ml-2'>{el.OperGSTIN}</span>
+												Manufacturing Year:{' '}
+												<span className='ml-2'>{el.AstModel}</span>
 											</label>
 											<label className='p-1 my-1 text-start'>
-												Phone No: <span className='ml-2'>{el.OperPhone}</span>
+												Chasis No: <span className='ml-2'>{el.AstChasNo}</span>
 											</label>
 											<label className='p-1 my-1 text-start'>
-												Contact Name:
-												<span className='ml-2'>{el.OperContactName}</span>
+												Engine No:<span className='ml-2'>{el.AstEngNo}</span>
 											</label>
 											<label className='p-1 my-1 text-start'>
-												Contact Email:
-												<span className='ml-2'>{el.OperContactEmail}</span>
+												Permit No:<span className='ml-2'>{el.AstPermitNo}</span>
 											</label>
 											<label className='p-1 my-1 text-start'>
-												Created Date:
+												Insurance Expire Date:
 												<span className='ml-2'>
-													{moment(el.OperCreatedDate).format('DD-MM-YYYY')}
+													{moment(el.AstInsurExp).format('DD-MM-YYYY')}
 												</span>
 											</label>
-											<div className='flex flex-row justify-center m-4'>
-												<Link to={'/opertable'}>
+											<div className='flex flex-row justify-evenly m-4'>
+												<Link to={'/astview'}>
 													<button className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'>
 														Cancel
 													</button>
 												</Link>
-												<Link to={`/approve/${el.OperId}`}>
+												<Link to={`/astupdate/${el.AstId}`}>
+													<button className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'>
+														Edit
+													</button>
+												</Link>
+												<Link to={`/Delete/${el.AstId}`}>
 													<button
 														className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'
 														onClick={handleSub}
 													>
-														Approve
+														Delete
 													</button>
 												</Link>
 											</div>
@@ -101,4 +105,4 @@ const Operview = () => {
 	);
 };
 
-export default Operview;
+export default Astview;

@@ -6,7 +6,7 @@ const Users = () => {
 	const [data, setData] = useState('');
 
 	const getUsers = async () => {
-		const res = await axios.get('http://localhost:8004/admin/users');
+		const res = await axios.get('https://amsweets.in/admin/users');
 
 		if (res.data.status === 201) {
 			setData(res.data.data);

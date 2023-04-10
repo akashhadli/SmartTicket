@@ -7,7 +7,7 @@ const Assets = () => {
 	const [data, setData] = useState('');
 
 	const getAssets = async () => {
-		const res = await axios.get('http://localhost:8004/admin/assets');
+		const res = await axios.get('https://amsweets.in/admin/assets');
 
 		if (res.data.status === 201) {
 			setData(res.data.data);

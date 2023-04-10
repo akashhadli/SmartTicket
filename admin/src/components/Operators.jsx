@@ -7,7 +7,7 @@ const Operators = () => {
 	const [data, setData] = useState('');
 
 	const getOperators = async () => {
-		const res = await axios.get('http://localhost:8004/admin/operators');
+		const res = await axios.get('https://amsweets.in/admin/operators');
 
 		if (res.data.status === 201) {
 			console.log(res.data.data);

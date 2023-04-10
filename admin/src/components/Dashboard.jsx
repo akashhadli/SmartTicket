@@ -5,9 +5,9 @@ import Sidebar from './Sidebar';
 
 const Dashboard = () => {
 	return (
-		<div className='flex flex-row gap-4 h-full'>
+		<div className='flex flex-row gap-4 bg-gray-50'>
 			<Sidebar />
-			<div className='justify-center items-center m-auto'>Dashboard</div>
+			<div className='justify-center text-center m-auto'>Dashboard</div>
 		</div>
 	);
 };

@@ -104,7 +104,7 @@ const Sidebar = () => {
 								<span className='ml-2'>Team</span>
 								<FontAwesomeIcon
 									icon={faChevronRight}
-									className={`ml-auto transition-transform duration-300 ml-[57px] ${
+									className={`ml-auto transition-transform duration-300 ml-[58px] ${
 										showTeamDropdown ? 'transform rotate-90' : ''
 									}`}
 								/>
