@@ -1,7 +1,25 @@
 const express = require('express');
 const router = express.Router();
 
-const { getOperator, createOperator, getAllOperators, getOperators, validateOperator, createAsset, createQrcodeAsset, readAsset, deleteAsset, updateAsset, createStage, createRoute, validateStage, readRoute, readStage, createRoutemap, getAssetById } = require('../../controllers/Operator/operator');
+const {
+	getOperator,
+	createOperator,
+	getAllOperators,
+	getOperators,
+	validateOperator,
+	createAsset,
+	createQrcodeAsset,
+	readAsset,
+	deleteAsset,
+	updateAsset,
+	createStage,
+	createRoute,
+	validateStage,
+	readRoute,
+	readStage,
+	createRoutemap,
+	getAssetById,
+} = require('../../controllers/Operator/operator');
 
 router.route('/readId').get(getOperator);
 router.route('/create').post(createOperator);
@@ -23,6 +41,5 @@ router.route('/readroute').post(readRoute);
 router.route('/createroutemap').post(createRoutemap);
 
 // router.route('/generate-qr-code').post(createQrcodeAsset);
-
 
 module.exports = router;

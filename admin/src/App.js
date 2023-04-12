@@ -21,6 +21,11 @@ import Employees from './components/Employees';
 import Operators from './components/Operators';
 import Users from './components/Users';
 import Admins from './components/Admins';
+import ViewAdmin from './components/ViewAdmin';
+import ViewUser from './components/ViewUser';
+import ViewOperator from './components/ViewOperator';
+import ViewEmployee from './components/ViewEmployee';
+import ViewAsset from './components/ViewAsset';
 
 function App() {
 	return (
@@ -45,11 +50,16 @@ function App() {
 				<Route path='/stageregister' element={<Stageregister />} />
 				<Route path='/routeregister' element={<Routeregister />} />
 				<Route path='/routemap' element={<RouteStageMap />} />
-				<Route path='/assetsview' element={<Assets />} />
-				<Route path='/employeesview' element={<Employees />} />
-				<Route path='/operatorsview' element={<Operators />} />
-				<Route path='/usersview' element={<Users />} />
-				<Route path='/adminview' element={<Admins />} />
+				<Route path='/admin/assetsview' element={<Assets />} />
+				<Route path='/admin/assetsview/:AstId' element={<ViewAsset />} />
+				<Route path='/admin/employeesview' element={<Employees />} />
+				<Route path='/admin/employeesview/:EmpId' element={<ViewEmployee />} />
+				<Route path='/admin/operatorsview' element={<Operators />} />
+				<Route path='/admin/operatorsview/:OperId' element={<ViewOperator />} />
+				<Route path='/admin/adminview' element={<Admins />} />
+				<Route path='/admin/adminview/:AdminId' element={<ViewAdmin />} />
+				<Route path='/admin/usersview' element={<Users />} />
+				<Route path='/admin/usersview/:UserId' element={<ViewUser />} />
 			</Routes>
 		</BrowserRouter>
 	);
