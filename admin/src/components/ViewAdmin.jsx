@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import Sidebar from './Sidebar';
 
 const ViewAdmin = () => {
-	// const history = useNavigate();
 	const [data, setData] = useState([]);
 	const { AdminId } = useParams();
-	const getAdminData = async () => {
+	const getSingleAdminData = async () => {
 		const res = await axios.get(`http://localhost:8004/admin/${AdminId}`);
 
 		if (res.data.status === 201) {
@@ -20,37 +18,23 @@ const ViewAdmin = () => {
 		}
 	};
 
-	// const handleSub = async () => {
-	// 	const res = await axios.patch(
-	// 		`http://localhost:8004/admin/approve/${AdminId}`
-	// 	);
-	// 	if (res.data.status === 201) {
-	// 		alert('Operator Approved');
-	// 		setTimeout(() => history('/dashboard'), 500);
-	// 		return;
-	// 	} else {
-	// 		console.log('error');
-	// 	}
-	// };
-
 	useEffect(() => {
-		getAdminData();
+		getSingleAdminData();
 	}, []);
 
 	return (
 		<>
 			<div className='flex flex-row gap-4'>
 				<Sidebar />
-				<div className='container  my-8 h-full w-auto p-4 ml-[30%] pr-6 border'>
-					<h1 className='text-4xl text-pink-500 ml-4 py-6'>Admin Detail</h1>
+				<div className='container  my-8 h-full w-[40%] p-4 mx-auto pr-6 border'>
+					<h1 className='text-center text-4xl text-pink-500  py-6'>
+						Admin Detail
+					</h1>
 					{data.length > 0
 						? data.map((el, i) => {
 								return (
 									<>
-										<div className='flex flex-col ml-4' key={el.AdminId}>
-											<label className='p-1 my-1 text-start'>
-												ID: <span className='ml-2'>{el.AdminId}</span>
-											</label>
+										<div className='flex flex-col ml-4' key={i + 1}>
 											<label className='p-1 my-1 text-start'>
 												Name: <span className='ml-2'>{el.Aname}</span>
 											</label>
@@ -61,7 +45,10 @@ const ViewAdmin = () => {
 												Mobile No: <span className='ml-2'>{el.Amobile}</span>
 											</label>
 											<label className='p-1 my-1 text-start'>
-												Date of Birth: <span className='ml-2'>{el.ADoB}</span>
+												Date of Birth:{' '}
+												<span className='ml-2'>
+													{moment(el.ADoB).format('DD-MM-YYYY')}
+												</span>
 											</label>
 											<label className='p-1 my-1 text-start'>
 												Gender:
@@ -79,21 +66,9 @@ const ViewAdmin = () => {
 													{moment(el.AModifiedDate).format('DD-MM-YYYY')}
 												</span>
 											</label>
-											{/* <div className='flex flex-row justify-center m-4'>
-												<Link to={'/opertable'}>
-													<button className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'>
-														Cancel
-													</button>
-												</Link>
-												<Link to={`/approve/${el.AdminId}`}>
-													<button
-														className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'
-														onClick={handleSub}
-													>
-														Delete
-													</button>
-												</Link>
-											</div> */}
+											<label className='p-1 my-1 text-start'>
+												Status:<span className='ml-2'>{el.AStatus}</span>
+											</label>
 										</div>
 									</>
 								);

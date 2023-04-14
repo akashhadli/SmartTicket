@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import Sidebar from './Sidebar';
 
 const ViewUser = () => {
-	// const history = useNavigate();
 	const [data, setData] = useState([]);
 	const { UserId } = useParams();
-	const getUserData = async () => {
+	const getSingleUserData = async () => {
 		const res = await axios.get(`http://localhost:8004/admin/users/${UserId}`);
 
 		if (res.data.status === 201) {
@@ -20,21 +18,8 @@ const ViewUser = () => {
 		}
 	};
 
-	// const handleSub = async () => {
-	// 	const res = await axios.patch(
-	// 		`http://localhost:8004/admin/approve/${UserId}`
-	// 	);
-	// 	if (res.data.status === 201) {
-	// 		alert('Operator Approved');
-	// 		setTimeout(() => history('/dashboard'), 500);
-	// 		return;
-	// 	} else {
-	// 		console.log('error');
-	// 	}
-	// };
-
 	useEffect(() => {
-		getUserData();
+		getSingleUserData();
 	}, []);
 
 	return (
@@ -107,21 +92,6 @@ const ViewUser = () => {
 													{moment(el.UModifiedDate).format('DD-MM-YYYY')}
 												</span>
 											</label>
-											{/* <div className='flex flex-row justify-center m-4'>
-												<Link to={'/opertable'}>
-													<button className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'>
-														Cancel
-													</button>
-												</Link>
-												<Link to={`/approve/${el.UserId}`}>
-													<button
-														className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'
-														onClick={handleSub}
-													>
-														Approve
-													</button>
-												</Link>
-											</div> */}
 										</div>
 									</>
 								);

@@ -34,7 +34,7 @@ const SignIn = () => {
 		if (!Aname || !Apassword) {
 			alert('Fill the details');
 		} else {
-			const res = await axios.post('https://amsweets.in/admin/login', {
+			const res = await axios.post('http://localhost:8004/admin/login', {
 				Aname,
 				Apassword,
 			});
@@ -48,7 +48,7 @@ const SignIn = () => {
 			if (res.data.status === 201) {
 				alert('User Login Successfully');
 				if (res.data.data.Flag === 'A') {
-					setTimeout(() => history('/dashboard'), 500);
+					setTimeout(() => history('/admin/dashboard'), 500);
 					return;
 				}
 				if (res.data.data.Flag === 'O') {

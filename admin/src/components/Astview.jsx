@@ -10,7 +10,9 @@ const Astview = () => {
 	const [data, setData] = useState([]);
 	const { AstId } = useParams();
 	const getAssetData = async () => {
-		const res = await axios.get(`https://amsweets.in/operator/asset/${AstId}`);
+		const res = await axios.get(
+			`http://localhost:8004/operator/asset/${AstId}`
+		);
 
 		if (res.data.status === 201) {
 			setData(res.data.data);
@@ -21,11 +23,11 @@ const Astview = () => {
 
 	const handleSub = async () => {
 		const res = await axios.patch(
-			`https://amsweets.in/operator/delete/${AstId}`
+			`http://localhost:8004/operator/asset/delete/${AstId}`
 		);
 		if (res.data.status === 201) {
 			alert(res.data.data);
-			history('/operdashboard');
+			history('/astview');
 			return;
 		} else {
 			console.log('error');
@@ -74,6 +76,9 @@ const Astview = () => {
 													{moment(el.AstInsurExp).format('DD-MM-YYYY')}
 												</span>
 											</label>
+											<label className='p-1 my-1 text-start'>
+												Status:<span className='ml-2'>{el.AStatus}</span>
+											</label>
 											<div className='flex flex-row justify-evenly m-4'>
 												<Link to={'/astview'}>
 													<button className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'>
@@ -85,14 +90,13 @@ const Astview = () => {
 														Edit
 													</button>
 												</Link>
-												<Link to={`/Delete/${el.AstId}`}>
-													<button
-														className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'
-														onClick={handleSub}
-													>
-														Delete
-													</button>
-												</Link>
+
+												<button
+													className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'
+													onClick={handleSub}
+												>
+													Delete
+												</button>
 											</div>
 										</div>
 									</>

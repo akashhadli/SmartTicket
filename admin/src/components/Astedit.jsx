@@ -13,6 +13,7 @@ const Astedit = () => {
 	const [astPermitNo, setAstPermitNo] = useState('');
 	const [astInsurExp, setAstInsurExp] = useState('');
 	const [astPermitExp, setAstPermitExp] = useState('');
+	const [astatus, setAstatus] = useState('');
 	const history = useNavigate();
 
 	const { AstId } = useParams();
@@ -43,14 +44,15 @@ const Astedit = () => {
 	const setData8 = (e) => {
 		setAstPermitExp(e.target.value);
 	};
-
+	const setData9 = (e) => {
+		setAstatus(e.target.value);
+	};
 	const getData = async () => {
 		const res1 = await axios.get(
-			`https://amsweets.in/operator/astread/${AstId}`
+			`http://localhost:8004/operator/astread/${AstId}`
 		);
 
 		if (res1.data.status === 201) {
-			console.log(res1.data.data[0]);
 			setAstRegNo(res1.data.data[0].AstRegNo);
 			setAstName(res1.data.data[0].AstName);
 			setAstModel(res1.data.data[0].AstModel);
@@ -59,6 +61,7 @@ const Astedit = () => {
 			setAstPermitNo(res1.data.data[0].AstPermitNo);
 			setAstInsurExp(res1.data.data[0].AstInsurExp);
 			setAstPermitExp(res1.data.data[0].AstPermitExp);
+			setAstatus(res1.data.data[0].AStatus);
 			return;
 		} else {
 			console.log('error');
@@ -76,13 +79,14 @@ const Astedit = () => {
 			!astEngNo ||
 			!astPermitNo ||
 			!astInsurExp ||
-			!astPermitExp
+			!astPermitExp ||
+			!astatus
 		) {
 			alert('Fill the details');
 			return;
 		} else {
 			const res = await axios.patch(
-				`https://amsweets.in/operator/asset/update/${AstId}`,
+				`http://localhost:8004/operator/asset/update/${AstId}`,
 				{
 					astRegNo,
 					astName,
@@ -92,14 +96,15 @@ const Astedit = () => {
 					astPermitNo,
 					astInsurExp,
 					astPermitExp,
+					astatus,
 				}
 			);
 			if (res.data.status === 201) {
-				alert('Employee successfully update');
+				alert('Asset successfully update');
 				history('/astview');
 				return;
 			} else {
-				alert('Employee unable to update');
+				alert('Asset unable to update');
 				return;
 			}
 		}
@@ -196,6 +201,18 @@ const Astedit = () => {
 								value={astPermitExp}
 								className='border rounded w-full hover:border-pink-500 duration-200 p-1'
 							/>
+						</div>
+						<div className='flex flex-col py-1'>
+							<label>Status</label>
+							<select
+								className='border p-1 rounded w-full hover:border-pink-500 duration-200'
+								name='astatus'
+								value={astatus}
+								onChange={setData9}
+							>
+								<option value='A'>A</option>
+								<option value='I'>I</option>
+							</select>
 						</div>
 						<button
 							className='border w-full my-2 py-2 text-white bg-pink-500 rounded text-lg hover:bg-pink-400 duration-200'

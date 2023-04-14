@@ -34,13 +34,16 @@ const Routeregister = () => {
 		if (!RouteName || !RouteEffDate || !RouteSStage || !RouteEStage) {
 			alert('Fill the details');
 		} else {
-			const res = await axios.post('https://amsweets.in/operator/routecreate', {
-				RouteName,
-				RouteEffDate,
-				RouteSStage,
-				RouteEStage,
-				operId,
-			});
+			const res = await axios.post(
+				'http://localhost:8004/operator/routecreate',
+				{
+					RouteName,
+					RouteEffDate,
+					RouteSStage,
+					RouteEStage,
+					operId,
+				}
+			);
 			if (res.data.status === 201) {
 				alert('Route created successfully');
 				var form = document.getElementsByName('contact-form')[0];

@@ -18,7 +18,7 @@ const setPassRoute = require('./routes/SetPassword/setPassword');
 const chngPassRoute = require('./routes/ChngPassword/chngPassword');
 const setRouteRoute = require('./routes/SetRoute/setRoute');
 const getRoute = require('./routes/GetRoute/getRoute');
-const getStage = require('./routes/GetStages/getStage');
+const getStage = require('./routes/GetStage/getStage');
 const getFare = require('./routes/CalculateFare/fare');
 const getTransactionId = require('./routes/Transaction/transaction');
 

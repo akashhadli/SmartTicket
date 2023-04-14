@@ -61,7 +61,7 @@ const Astregister = () => {
 		) {
 			alert('Fill the details');
 		} else {
-			const res = await axios.post('https://amsweets.in/operator/astcreate', {
+			const res = await axios.post('http://localhost:8004/operator/astcreate', {
 				astRegNo,
 				astName,
 				astModel,
@@ -75,7 +75,7 @@ const Astregister = () => {
 			if (res.data.status === 201) {
 				alert('Asset created successfully');
 				await axios
-					.post('https://amsweets.in/operator/createqrcode', {
+					.post('http://localhost:8004/operator/createqrcode', {
 						data: data,
 					})
 					.then((response) => {
@@ -86,7 +86,7 @@ const Astregister = () => {
 					.catch((error) => {
 						console.error(error);
 					});
-				//   const res1= await axios.post('https://amsweets.in/operator/generate-qr-code', {
+				//   const res1= await axios.post('http://localhost:8004/operator/generate-qr-code', {
 				//     data: data
 				// })
 				// if(res1.data.status === 201){

@@ -47,7 +47,7 @@ const RouteStageMap = () => {
 	var operId = JSON.parse(ID);
 
 	const getRoute = async () => {
-		const res = await axios.post('https://amsweets.in/operator/readroute', {
+		const res = await axios.post('http://localhost:8004/operator/readroute', {
 			operId,
 		});
 		if (res.data.status === 201) {
@@ -59,7 +59,7 @@ const RouteStageMap = () => {
 	};
 
 	const getStage = async () => {
-		const res1 = await axios.post('https://amsweets.in/operator/readstage', {
+		const res1 = await axios.post('http://localhost:8004/operator/readstage', {
 			operId,
 		});
 		if (res1.data.status === 201) {
@@ -95,10 +95,11 @@ const RouteStageMap = () => {
 			setRoute('');
 			setStage('');
 			setFare('');
+			window.location.reload();
 			return;
 		} else {
 			const res1 = await axios.post(
-				'https://amsweets.in/operator/createroutemap',
+				'http://localhost:8004/operator/createroutemap',
 				{
 					route,
 					stage,
@@ -112,6 +113,7 @@ const RouteStageMap = () => {
 				setRoute('');
 				setStage('');
 				setFare('');
+				window.location.reload();
 				var form = document.getElementsByName('contact-form')[0];
 				form.reset();
 				return;

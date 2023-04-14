@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 import moment from 'moment';
 import Opersidebar from './Opersidebar';
+import './pagination.css';
 
 const Asttable = () => {
 	const [data, setData] = useState('');
+	const [currentPage, setCurrentPage] = useState(1);
+	const [itemsPerPage, setItemsPerPage] = useState(10);
 	const ID = window.localStorage.getItem('OperID');
 	var operId = JSON.parse(ID);
 
 	const getAstData = async () => {
-		const res = await axios.post('https://amsweets.in/operator/readast', {
+		const res = await axios.post('http://localhost:8004/operator/readast', {
 			operId,
 		});
 		if (res.data.status === 201) {
@@ -20,58 +24,133 @@ const Asttable = () => {
 		}
 	};
 
+	// Get current items based on currentPage and itemsPerPage
+	const indexOfLastItem = currentPage * itemsPerPage;
+	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+	const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+	// Change page
+	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+	// Render page numbers
+	const pageNumber = [];
+	for (let i = 1; i <= Math.ceil(data.length / itemsPerPage); i++) {
+		pageNumber.push(i);
+	}
+
+	const renderPageNumbers = pageNumber.map((number) => {
+		return (
+			<li
+				key={number}
+				className={`${currentPage === number ? 'active' : ''}page-item`}
+			>
+				<button className='page-link' onClick={() => paginate(number)}>
+					{number}
+				</button>
+			</li>
+		);
+	});
+
 	useEffect(() => {
 		getAstData();
 	});
+
 	return (
 		<>
-			<div className='flex flex-row gap-10'>
-				<Opersidebar />
-				<div className='bg-white p-4 mt-16 mr-10  h-64 items-center rounded-md border w-full border-gray-200 flex-1  max-h-[100vh] overflow-y-auto '>
-					<strong className='text-gray-700 font-large'>Asset Table</strong>
-					<div className='border-x border-gray-200 rounded-sm mt-2'>
-						<table className='w-full text-gray-700 justify-between mx-1  '>
-							<thead>
-								<tr className=''>
-									<th className='p-1 ml-1'>Sl No</th>
-									<th className='p-1 ml-1'>Asset Reg No</th>
-									<th className='p-1 ml-1'>Asset Model</th>
-									<th className='p-1 ml-1'>Insurance Exp</th>
-									<th className='p-1 ml-1'>Permit Exp</th>
-									<th className='p-1 ml-1'>Status</th>
-									<th className='p-2 ml-1'>View</th>
-								</tr>
-							</thead>
-							<tbody className='justify-between  text-center'>
-								{data.length > 0
-									? data.map((el, i) => {
-											return (
-												<>
-													<tr>
-														<td className='p-1 ml-1'>{i + 1}</td>
-														<td className='p-1 ml-1'>{el.AstRegNo}</td>
-														<td className='p-1 ml-1'>{el.AstName}</td>
-														<td className='p-1 ml-1'>
-															{moment(el.AstInsurExp).format('DD-MM-YYYY')}
-														</td>
-														<td className='p-1 ml-1'>
-															{moment(el.AstPermitExp).format('DD-MM-YYYY')}
-														</td>
-														<td className='p-1 ml-1'>{el.AStatus}</td>
-														<td className='p-2 ml-1'>
-															<Link to={`/operator/asset/${el.AstId}`}>
-																<button className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'>
-																	View
-																</button>
-															</Link>
-														</td>
-													</tr>
-												</>
-											);
-									  })
-									: ' '}
-							</tbody>
-						</table>
+			<div>
+				<div className='flex flex-row gap-10'>
+					<Opersidebar />
+					<div className='flex-col  mr-10'>
+						<div className='bg-white p-4 mt-4 mr-10 ml-8 max-h-96 items-center rounded-md w-[160%] flex-1'>
+							<h1 className='text-gray-700 text-3xl text-center font-semibold pb-1'>
+								Asset Table
+							</h1>
+							<div className=' rounded-sm mt-2'>
+								<table className='w-full text-gray-700 justify-between mx-1 border border-gray-800'>
+									<thead>
+										<tr className='border border-gray-800'>
+											<th className='p-1 ml-1'>Sl No</th>
+											<th className='p-1 ml-1'>Asset Reg No</th>
+											<th className='p-1 ml-1'>Asset Model</th>
+											<th className='p-1 ml-1'>Insurance Exp</th>
+											<th className='p-1 ml-1'>Permit Exp</th>
+											<th className='p-1 ml-1'>Status</th>
+											<th className='p-2 ml-1'>View</th>
+										</tr>
+									</thead>
+									<tbody className='justify-between  text-center'>
+										{currentItems.length > 0
+											? currentItems.map((el, i) => {
+													return (
+														<>
+															<tr>
+																<td className='p-1 ml-1'>
+																	{indexOfFirstItem + i + 1}
+																</td>
+																<td className='p-1 ml-1'>{el.AstRegNo}</td>
+																<td className='p-1 ml-1'>{el.AstName}</td>
+																<td className='p-1 ml-1'>
+																	{moment(el.AstInsurExp).format('DD-MM-YYYY')}
+																</td>
+																<td className='p-1 ml-1'>
+																	{moment(el.AstPermitExp).format('DD-MM-YYYY')}
+																</td>
+																<td className='p-1 ml-1'>{el.AStatus}</td>
+																<td className='p-2 ml-1'>
+																	<Link to={`/operator/asset/${el.AstId}`}>
+																		<button className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'>
+																			View
+																		</button>
+																	</Link>
+																</td>
+															</tr>
+														</>
+													);
+											  })
+											: ' '}
+									</tbody>
+								</table>
+								{/* Pagination */}
+								<div className='flex justify-center items-center'>
+									<nav>
+										<ul className='flex' id='pagination'>
+											<li
+												className={`${
+													currentPage === 1 ? 'disabled' : ''
+												} page-item`}
+											>
+												<button
+													className='page-link  rounded-r-md focus:outline-none rounded-l-md mr-6 mt-1'
+													onClick={() =>
+														setCurrentPage((prev) =>
+															prev === 1 ? prev : prev - 1
+														)
+													}
+												>
+													<FaAngleDoubleLeft />
+												</button>
+											</li>
+											{renderPageNumbers}
+											<li
+												className={`${
+													currentPage === pageNumber.length ? 'disabled' : ''
+												} page-item`}
+											>
+												<button
+													className='page-link  rounded-r-md focus:outline-none rounded-l-md ml-6 mt-1'
+													onClick={() =>
+														setCurrentPage((prev) =>
+															prev === pageNumber.length ? prev : prev + 1
+														)
+													}
+												>
+													<FaAngleDoubleRight />
+												</button>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

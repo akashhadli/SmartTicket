@@ -51,6 +51,7 @@ exports.getEmployeeById = (req, res) => {
 		}
 	});
 };
+
 //get user by id
 exports.getUserById = (req, res) => {
 	const { UserId } = req.params;

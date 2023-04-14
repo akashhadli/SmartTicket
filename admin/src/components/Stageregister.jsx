@@ -19,7 +19,7 @@ const Stageregister = () => {
 			return;
 		} else {
 			const res = await axios.post(
-				'https://amsweets.in/operator/stagevalidate',
+				'http://localhost:8004/operator/stagevalidate',
 				{
 					StageName,
 					operId,
@@ -33,7 +33,7 @@ const Stageregister = () => {
 				return;
 			} else {
 				const res1 = await axios.post(
-					'https://amsweets.in/operator/stagecreate',
+					'http://localhost:8004/operator/stagecreate',
 					{
 						StageName,
 						operId,

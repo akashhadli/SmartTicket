@@ -32,7 +32,7 @@ const Sidebar = () => {
 	};
 
 	return (
-		<div className='bg-neutral-100 flex flex-col py-3 px-1 w-60 h-screen'>
+		<div className='bg-neutral-100 flex flex-col py-3 px-1 w-64 h-screen'>
 			<div className='flex items-center justify-start hover:cursor-pointer'>
 				<img
 					className='w-[50px] ml-2 rounded-r-full rounded-l-full'
@@ -43,7 +43,7 @@ const Sidebar = () => {
 			</div>
 			<div className='flex-1'>
 				<ul className='p-2'>
-					<Link to='/dashboard'>
+					<Link to='/admin/dashboard'>
 						<li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
 							<HiOutlineViewGrid />
 							<span className='ml-1'>Dashboard</span>
@@ -59,7 +59,7 @@ const Sidebar = () => {
 								<span className='ml-2'>Operator</span>
 								<FontAwesomeIcon
 									icon={faChevronRight}
-									className={`transition-transform duration-300 ml-[30px] ${
+									className={`transition-transform duration-300 ml-[73px] ${
 										showOperatorDropdown ? 'transform rotate-90' : ''
 									}`}
 								/>
@@ -67,15 +67,15 @@ const Sidebar = () => {
 						</button>
 						{showOperatorDropdown && (
 							<div className=' mt-2'>
-								<Link to='/assetsview'>
+								<Link to='/admin/approveopersview'>
 									<button className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
 										<li className='flex justify-start items-center pr-1 mr-4 text-center'>
-											<GrBus />
-											<span className='ml-2'>Show Asset</span>
+											<GiPoliceOfficerHead />
+											<span className='ml-2'>Approve Operators</span>
 										</li>
 									</button>
 								</Link>
-								<Link to='/operatorsview'>
+								<Link to='/admin/operatorsview'>
 									<button className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
 										<li className='flex justify-start items-center pr-1 mr-4 text-center'>
 											<GiPoliceOfficerHead />
@@ -83,11 +83,19 @@ const Sidebar = () => {
 										</li>
 									</button>
 								</Link>
-								<Link to='/employeesview'>
+								<Link to='/admin/employeesview'>
 									<button className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
 										<li className='flex justify-start items-center pr-1 mr-4 text-center'>
 											<BsPersonBadge />
 											<span className='ml-2'>Show Employees</span>
+										</li>
+									</button>
+								</Link>
+								<Link to='/admin/assetsview'>
+									<button className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
+										<li className='flex justify-start items-center pr-1 mr-4 text-center'>
+											<GrBus />
+											<span className='ml-2'>Show Asset</span>
 										</li>
 									</button>
 								</Link>
@@ -104,7 +112,7 @@ const Sidebar = () => {
 								<span className='ml-2'>Team</span>
 								<FontAwesomeIcon
 									icon={faChevronRight}
-									className={`ml-auto transition-transform duration-300 ml-[58px] ${
+									className={`ml-auto transition-transform duration-300 ml-[99px] ${
 										showTeamDropdown ? 'transform rotate-90' : ''
 									}`}
 								/>
@@ -112,7 +120,7 @@ const Sidebar = () => {
 						</button>
 						{showTeamDropdown && (
 							<div className=' mt-2'>
-								<Link to='/addAdmin'>
+								<Link to='/admin/addAdmin'>
 									<button className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
 										<li className='flex justify-start items-center pr-1 mr-4 text-center'>
 											<BsFillPersonPlusFill />
@@ -120,7 +128,7 @@ const Sidebar = () => {
 										</li>
 									</button>
 								</Link>
-								<Link to='/adminview'>
+								<Link to='/admin/adminview'>
 									<button className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
 										<li className='flex justify-start items-center pr-1 mr-4 text-center'>
 											<BiShowAlt />
@@ -131,7 +139,7 @@ const Sidebar = () => {
 							</div>
 						)}
 					</div>
-					<Link to='/usersview'>
+					<Link to='/admin/usersview'>
 						<li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
 							<ImUser />
 							<span className='ml-1'>Users</span>

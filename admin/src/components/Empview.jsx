@@ -10,7 +10,7 @@ const Empview = () => {
 	const [data, setData] = useState([]);
 	const { EmpId } = useParams();
 	const getEmployeeData = async () => {
-		const res = await axios.get(`https://amsweets.in/employee/${EmpId}`);
+		const res = await axios.get(`http://localhost:8004/employee/${EmpId}`);
 
 		if (res.data.status === 201) {
 			setData(res.data.data);
@@ -21,7 +21,7 @@ const Empview = () => {
 
 	const handleSub = async () => {
 		const res = await axios.patch(
-			`https://amsweets.in/employee/delete/${EmpId}`
+			`http://localhost:8004/employee/delete/${EmpId}`
 		);
 		if (res.data.status === 201) {
 			alert(res.data.data);
@@ -102,14 +102,12 @@ const Empview = () => {
 														Edit
 													</button>
 												</Link>
-												<Link to={`/Delete/${el.EmpId}`}>
-													<button
-														className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'
-														onClick={handleSub}
-													>
-														Delete
-													</button>
-												</Link>
+												<button
+													className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'
+													onClick={handleSub}
+												>
+													Delete
+												</button>
 											</div>
 										</div>
 									</>

@@ -88,7 +88,7 @@ const Register = () => {
 			return;
 		} else {
 			const res = await axios.post(
-				'https://amsweets.in/operator/operatorvalidate',
+				'http://localhost:8004/operator/operatorvalidate',
 				{
 					OperEmail,
 					OperContactEmail,
@@ -99,7 +99,7 @@ const Register = () => {
 				alert('User already Exist');
 				return;
 			} else {
-				const res1 = await axios.post('https://amsweets.in/operator/create', {
+				const res1 = await axios.post('http://localhost:8004/operator/create', {
 					OperId,
 					OperName,
 					OperShortName,

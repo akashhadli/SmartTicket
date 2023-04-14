@@ -12,6 +12,7 @@ const {
 	getAllOperators,
 	getAllEmployees,
 	getAllUsers,
+	getAllTransactions,
 } = require('../../controllers/Admin/admin');
 
 router.route('/login').post(login);
@@ -24,5 +25,6 @@ router.route('/assets').get(getAllAssets);
 router.route('/operators').get(getAllOperators);
 router.route('/employees').get(getAllEmployees);
 router.route('/users').get(getAllUsers);
+router.route('/transactions').get(getAllTransactions);
 
 module.exports = router;

@@ -36,13 +36,23 @@ exports.createAdmin = (req, res) => {
 	bcrypt.hash(tblLPAdm.Apassword, saltRounds, (err, hash) => {
 		if (!err) {
 			query =
-				'INSERT INTO tbllpadm (AdminId, Aname, Amobile, Aemail, Apassword) values(?, ?, ?, ?, ?)';
+				'INSERT INTO tbllpadm (AdminId, Aname, Amobile, Agender, ADoB, Aemail, Apassword) values(?, ?, ?, ?, ?, ?, ?)';
 			db.query(
 				query,
-				[AdminId, tblLPAdm.Aname, tblLPAdm.Amobile, tblLPAdm.Aemail, hash],
+				[
+					AdminId,
+					tblLPAdm.Aname,
+					tblLPAdm.Amobile,
+					tblLPAdm.Agender,
+					tblLPAdm.ADoB,
+					tblLPAdm.Aemail,
+					hash,
+				],
 				(err, results) => {
 					if (!err) {
-						res.status(200).json({ message: 'admin added successfully' });
+						res
+							.status(200)
+							.json({ status: 201, message: 'admin added successfully' });
 						addAuth(AdminId);
 						return;
 					} else {
@@ -175,6 +185,17 @@ exports.getAllEmployees = (req, res) => {
 
 exports.getAllUsers = (req, res) => {
 	var query = 'SELECT * FROM tblCommuter';
+	db.query(query, (err, results) => {
+		if (!err) {
+			return res.status(200).json({ status: 201, data: results });
+		} else {
+			return res.status(500).json({ status: 500, data: err });
+		}
+	});
+};
+
+exports.getAllTransactions = (req, res) => {
+	var query = 'SELECT * FROM tblTransaction';
 	db.query(query, (err, results) => {
 		if (!err) {
 			return res.status(200).json({ status: 201, data: results });
