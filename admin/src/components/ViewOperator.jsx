@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Sidebar from './Sidebar';
 
 const ViewOperator = () => {
 	const [data, setData] = useState([]);
 	const { OperId } = useParams();
+	const history = useNavigate();
+
 	const getSingleOperatorData = async () => {
 		const res = await axios.get(
 			`http://localhost:8004/admin/operators/${OperId}`
@@ -20,7 +22,13 @@ const ViewOperator = () => {
 	};
 
 	useEffect(() => {
-		getSingleOperatorData();
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		} else {
+			getSingleOperatorData();
+		}
 	}, []);
 
 	return (

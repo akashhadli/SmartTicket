@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Sidebar from './Sidebar';
 
 const ViewEmployee = () => {
 	const [data, setData] = useState([]);
 	const { EmpId } = useParams();
+	const history = useNavigate();
+
 	const getSingleEmployeeData = async () => {
 		const res = await axios.get(
 			`http://localhost:8004/admin/employees/${EmpId}`
@@ -20,7 +22,13 @@ const ViewEmployee = () => {
 	};
 
 	useEffect(() => {
-		getSingleEmployeeData();
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		} else {
+			getSingleEmployeeData();
+		}
 	}, []);
 
 	return (

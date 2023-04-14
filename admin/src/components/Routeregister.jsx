@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Opersidebar from './Opersidebar';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Routeregister = () => {
 	const [RouteName, setRouteName] = useState('');
 	const [RouteEffDate, setRouteEffDate] = useState('');
 	const [RouteSStage, setRouteSStage] = useState('');
 	const [RouteEStage, setRouteEStage] = useState('');
+	const history = useNavigate();
 
 	const ID = window.localStorage.getItem('OperID');
 	var operId = JSON.parse(ID);
@@ -55,6 +57,15 @@ const Routeregister = () => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		}
+	}, []);
+
 	return (
 		<div className='flex flex-row gap-4 bg-gray-50'>
 			<Opersidebar />

@@ -1,5 +1,8 @@
 const db = require('../../db/db');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('../../config/config');
+
 const saltRounds = 10;
 var id = 0;
 
@@ -14,7 +17,16 @@ exports.login = (req, res) => {
 					results[0].Password,
 					(err, response) => {
 						if (response) {
-							res.status(201).json({ status: 201, data: results[0] });
+							const user = {
+								id: results[0].AuthID,
+								username: results[0].Email,
+								flag: results[0].Flag,
+							};
+							// Generate a JWT token with the user object and the secret key
+							const token = jwt.sign(user, config.secret);
+							res
+								.status(201)
+								.json({ status: 201, token: `${token}`, data: results[0] });
 						} else {
 							res.status(201).json({ message: 'Wrong username/password!!' });
 						}
@@ -29,6 +41,22 @@ exports.login = (req, res) => {
 	});
 };
 
+exports.verify = (res, req, next) => {
+	const authHeader = req.headers.authorization;
+	if (authHeader) {
+		const token = authHeader.split(' ')[1];
+
+		jwt.verify(token, 'config.secret', (err, result) => {
+			if (err) {
+				return res.status(401).json({ data: 'Token is not valid' });
+			} else {
+			}
+		});
+	} else {
+		res.status(401).json({ data: 'You are not authenticated' });
+	}
+};
+
 exports.createAdmin = (req, res) => {
 	id = id + 1;
 	let AdminId = `LP${id}`;
@@ -36,23 +64,13 @@ exports.createAdmin = (req, res) => {
 	bcrypt.hash(tblLPAdm.Apassword, saltRounds, (err, hash) => {
 		if (!err) {
 			query =
-				'INSERT INTO tbllpadm (AdminId, Aname, Amobile, Agender, ADoB, Aemail, Apassword) values(?, ?, ?, ?, ?, ?, ?)';
+				'INSERT INTO tbllpadm (AdminId, Aname, Amobile, Aemail, Apassword) values(?, ?, ?, ?, ?)';
 			db.query(
 				query,
-				[
-					AdminId,
-					tblLPAdm.Aname,
-					tblLPAdm.Amobile,
-					tblLPAdm.Agender,
-					tblLPAdm.ADoB,
-					tblLPAdm.Aemail,
-					hash,
-				],
+				[AdminId, tblLPAdm.Aname, tblLPAdm.Amobile, tblLPAdm.Aemail, hash],
 				(err, results) => {
 					if (!err) {
-						res
-							.status(200)
-							.json({ status: 201, message: 'admin added successfully' });
+						res.status(200).json({ message: 'admin added successfully' });
 						addAuth(AdminId);
 						return;
 					} else {

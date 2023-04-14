@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import Opersidebar from './Opersidebar';
+import { useNavigate } from 'react-router-dom';
 
 let arr = [];
 let arr1 = [];
@@ -19,7 +20,7 @@ const RouteStageMap = () => {
 	const [effDate, setEffDate] = useState('');
 	const [stage, setStage] = useState([]);
 	const [fare, setFare] = useState([]);
-
+	const history = useNavigate();
 	//functions for getting values
 	const setData1 = (e) => {
 		setRoute(e.target.value);
@@ -128,8 +129,14 @@ const RouteStageMap = () => {
 	};
 
 	useEffect(() => {
-		getRoute();
-		getStage();
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		} else {
+			getRoute();
+			getStage();
+		}
 	}, [operId]);
 
 	return (

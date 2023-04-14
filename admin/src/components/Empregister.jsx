@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useFormik } from 'formik';
@@ -93,6 +93,14 @@ const Empregister = () => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		}
+	}, []);
 
 	return (
 		<div className='flex flex-row gap-4'>

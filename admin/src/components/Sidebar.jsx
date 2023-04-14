@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiOutlineViewGrid } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.jpg';
@@ -31,6 +31,14 @@ const Sidebar = () => {
 		setShowTeamDropdown(!showTeamDropdown);
 	};
 
+	useEffect(() => {
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		}
+	}, []);
+
 	return (
 		<div className='bg-neutral-100 flex flex-col py-3 px-1 w-64 h-screen'>
 			<div className='flex items-center justify-start hover:cursor-pointer'>
@@ -54,12 +62,12 @@ const Sidebar = () => {
 							className='flex justify-start items-center p-2 ml-2 mr-0 mt-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer w-max'
 							onClick={handleOperatorDropdown}
 						>
-							<li className='flex justify-start items-center pr-1 mr-6 text-center'>
+							<li className='flex justify-start items-center pr-12 text-center'>
 								<MdApproval />
 								<span className='ml-2'>Operator</span>
 								<FontAwesomeIcon
 									icon={faChevronRight}
-									className={`transition-transform duration-300 ml-[73px] ${
+									className={`transition-transform duration-300 ml-[54px] ${
 										showOperatorDropdown ? 'transform rotate-90' : ''
 									}`}
 								/>
@@ -107,12 +115,12 @@ const Sidebar = () => {
 							className='flex justify-start items-center p-2 ml-2 mr-0 mt-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer w-max'
 							onClick={handleTeamDropdown}
 						>
-							<li className='flex justify-start items-center pr-1 mr-6 text-center'>
+							<li className='flex justify-start items-center pr-12 text-center'>
 								<GrGroup />
 								<span className='ml-2'>Team</span>
 								<FontAwesomeIcon
 									icon={faChevronRight}
-									className={`ml-auto transition-transform duration-300 ml-[99px] ${
+									className={`ml-auto transition-transform duration-300 ml-[80px] ${
 										showTeamDropdown ? 'transform rotate-90' : ''
 									}`}
 								/>

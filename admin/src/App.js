@@ -16,6 +16,9 @@ import Emptable from './components/Emptable';
 import Asttable from './components/Asttable';
 import Empedit from './components/Empedit';
 import Astedit from './components/Astedit';
+import Stgtable from './components/Stgtable';
+import Stgview from './components/Stgview';
+import Stgedit from './components/Stgedit';
 import Assets from './components/Assets';
 import Employees from './components/Employees';
 import Operators from './components/Operators';
@@ -26,6 +29,7 @@ import ViewUser from './components/ViewUser';
 import ViewOperator from './components/ViewOperator';
 import ViewEmployee from './components/ViewEmployee';
 import ViewAsset from './components/ViewAsset';
+import AdmiCreate from './components/AdmiCreate';
 
 function App() {
 	return (
@@ -33,7 +37,8 @@ function App() {
 			<Routes>
 				<Route path='/' element={<SignIn />} />
 				<Route path='/register' element={<Register />} />
-				<Route path='/dashboard' element={<Dashboard />} />
+				<Route path='/admin/dashboard' element={<Dashboard />} />
+				<Route path='/admin/addAdmin' element={<AdmiCreate />} />
 				<Route path='/opertable' element={<Opertable />} />
 				<Route path='/operdashboard' element={<Operdashboard />} />
 				<Route path='/approve/:OperId' element={<Opertable />} />
@@ -48,6 +53,9 @@ function App() {
 				<Route path='/astview' element={<Asttable />} />
 				<Route path='/operator/asset/:AstId' element={<Astview />} />
 				<Route path='/stageregister' element={<Stageregister />} />
+				<Route path='/stgview' element={<Stgtable />} />
+				<Route path='/operator/stage/:StageID' element={<Stgview />} />
+				<Route path='/stgupdate/:StageID' element={<Stgedit />} />
 				<Route path='/routeregister' element={<Routeregister />} />
 				<Route path='/routemap' element={<RouteStageMap />} />
 				<Route path='/admin/assetsview' element={<Assets />} />

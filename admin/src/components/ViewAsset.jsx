@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Sidebar from './Sidebar';
 
 const ViewAsset = () => {
 	const [data, setData] = useState([]);
 	const { AstId } = useParams();
+	const history = useNavigate();
+
 	const getSingleAssetData = async () => {
 		const res = await axios.get(`http://localhost:8004/admin/assets/${AstId}`);
 
@@ -19,7 +21,13 @@ const ViewAsset = () => {
 	};
 
 	useEffect(() => {
-		getSingleAssetData();
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		} else {
+			getSingleAssetData();
+		}
 	}, []);
 
 	return (

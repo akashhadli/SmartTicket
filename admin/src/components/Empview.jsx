@@ -33,7 +33,13 @@ const Empview = () => {
 	};
 
 	useEffect(() => {
-		getEmployeeData();
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		} else {
+			getEmployeeData();
+		}
 	}, []);
 	return (
 		<>

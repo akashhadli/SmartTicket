@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HiOutlineViewGrid, HiOutlineLogout } from 'react-icons/hi';
 import { GrBus, GrView } from 'react-icons/gr';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.jpg';
 import { AiFillSetting } from 'react-icons/ai';
 import { FaMapMarkedAlt } from 'react-icons/fa';
@@ -9,9 +9,9 @@ import { BsFillXDiamondFill } from 'react-icons/bs';
 import { TbRoute } from 'react-icons/tb';
 import { IoIosCreate } from 'react-icons/io';
 import { MdApproval } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AuthProvider } from '../Contexts/authContext';
 
 const Opersidebar = () => {
 	const [showAssetDropdown, setShowAssetDropdown] = useState(false);
@@ -31,6 +31,18 @@ const Opersidebar = () => {
 	const handleStageDropdown = () => {
 		setShowStageDropdown(!showStageDropdown);
 	};
+
+	const handleLogOut = (logout) => {
+		<AuthProvider children={logout} />;
+	};
+
+	useEffect(() => {
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		}
+	}, []);
 
 	return (
 		<div className='bg-neutral-100 flex flex-col py-3 px-1 w-64 h-screen'>
@@ -188,7 +200,9 @@ const Opersidebar = () => {
 						onClick={handlesub}
 					>
 						<HiOutlineLogout />
-						<span className='ml-2'>Logout</span>
+						<span className='ml-2' onClick={handleLogOut}>
+							Logout
+						</span>
 					</li>
 				</ul>
 			</div>

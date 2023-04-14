@@ -12,7 +12,7 @@ const Transaction = () => {
 	const [itemsPerPage, setItemsPerPage] = useState(10);
 
 	const getAdminsData = async () => {
-		const res = await axios.get('http://localhost:8004/admin/read');
+		const res = await axios.get('http://localhost:8004/admin/transactions/');
 		if (res.data.status === 201) {
 			setData(res.data.data);
 		} else {

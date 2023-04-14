@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Sidebar from './Sidebar';
 
 const ViewUser = () => {
 	const [data, setData] = useState([]);
 	const { UserId } = useParams();
+	const history = useNavigate();
+
 	const getSingleUserData = async () => {
 		const res = await axios.get(`http://localhost:8004/admin/users/${UserId}`);
 
@@ -19,7 +21,13 @@ const ViewUser = () => {
 	};
 
 	useEffect(() => {
-		getSingleUserData();
+		const token = window.localStorage.getItem('Lekpay');
+		const Token = JSON.parse(token);
+		if (!Token) {
+			history('/');
+		} else {
+			getSingleUserData();
+		}
 	}, []);
 
 	return (
