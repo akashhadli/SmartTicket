@@ -92,10 +92,43 @@ exports.getPaymentInfo = (req, res) => {
 //create asset qrcode
 exports.createTransQR = async (req, res) => {
 	const qrstring = req.body;
+	const oid = qrstring.orderid;
 
 	const data = JSON.stringify(qrstring);
 
 	//Qrcode using Qr-image
 	const qrCodeData = qr.imageSync(data, { type: 'png' }); // Get the QR code image data as a buffer
-	res.send(qrCodeData.toString('base64')); // Send the QR code image data as the response
+	var QRVal = qrCodeData.toString('base64');
+
+	const query = 'UPDATE tblTransaction SET QR = ? WHERE OrderID = ?';
+	db.query(query, [QRVal, oid], (err, result) => {
+		if (!err) {
+			res.send(qrCodeData.toString('base64')); // Send the QR code image data as the response
+			return;
+		} else {
+			res.send(err);
+		}
+	});
+};
+
+// qrverify
+exports.transQRVerify = (req, res) => {
+	let payData = req.body;
+	let oid = payData.OrderID;
+	let qrok = 'I';
+	let query = 'SELECT QRStatus FROM tblTransaction WHERE OrderID = ?';
+	db.query(query, [oid], (err, results) => {
+		if (!err) {
+			if (results[0].QRStatus == 'A') {
+				let query1 = 'UPDATE tblTransaction SET QRStatus = ? WHERE OrderID = ?';
+				db.query(query1, [qrok, oid], (err, results) => {
+					if (!err) {
+						res.json({ message: 'OK' });
+					}
+				});
+			} else {
+				res.json({ message: 'Not OK' });
+			}
+		}
+	});
 };
