@@ -8,7 +8,7 @@ var id = 0;
 
 exports.login = (req, res) => {
 	const tblLPAdm = req.body;
-	var query = 'SELECT * FROM tblauth WHERE MobileNo = ? or Email=?';
+	var query = 'SELECT * FROM tblAuth WHERE MobileNo = ? or Email=?';
 	db.query(query, [tblLPAdm.Aname, tblLPAdm.Aname], (err, results) => {
 		if (!err) {
 			if (results.length > 0) {
@@ -64,7 +64,7 @@ exports.createAdmin = (req, res) => {
 	bcrypt.hash(tblLPAdm.Apassword, saltRounds, (err, hash) => {
 		if (!err) {
 			query =
-				'INSERT INTO tbllpadm (AdminId, Aname, Amobile, Aemail, Apassword) values(?, ?, ?, ?, ?)';
+				'INSERT INTO tblLPAdm (AdminId, Aname, Amobile, Aemail, Apassword) values(?, ?, ?, ?, ?)';
 			db.query(
 				query,
 				[AdminId, tblLPAdm.Aname, tblLPAdm.Amobile, tblLPAdm.Aemail, hash],
@@ -86,7 +86,7 @@ exports.createAdmin = (req, res) => {
 
 const addAuth = (AdminId) => {
 	var query =
-		'INSERT INTO tblauth(AuthID, MobileNo, Email, Password, Flag) SELECT AdminId, Amobile, Aemail, Apassword, Flag FROM tbllpadm WHERE AdminId = ?';
+		'INSERT INTO tblAuth(AuthID, MobileNo, Email, Password, Flag) SELECT AdminId, Amobile, Aemail, Apassword, Flag FROM tblLPAdm WHERE AdminId = ?';
 	db.query(query, [AdminId], (err, results) => {
 		if (!err) {
 			return console.log(results);
@@ -110,7 +110,7 @@ exports.getAllAdmins = (req, res) => {
 exports.resetPassword = (req, res) => {
 	const id = req.params.id;
 	let tblLPAdm = req.body;
-	var query = 'UPDATE tbllpadm SET Apassword = ? WHERE AdminId = ?';
+	var query = 'UPDATE tblLPAdm SET Apassword = ? WHERE AdminId = ?';
 	db.query(query, [tblLPAdm.Apassword, id], (err, results) => {
 		if (!err) {
 			if (results.affectedRows === 0) {
@@ -125,7 +125,7 @@ exports.resetPassword = (req, res) => {
 
 exports.deleteAdmin = (req, res) => {
 	const id = req.params.id;
-	var query = 'DELETE FROM tbllpadm WHERE AdminId = ?';
+	var query = 'DELETE FROM tblLPAdm WHERE AdminId = ?';
 	db.query(query, [id], (err, results) => {
 		if (!err) {
 			if (results.affectedRows === 0) {
@@ -141,7 +141,7 @@ exports.deleteAdmin = (req, res) => {
 exports.approveOperator = (req, res) => {
 	const { OperId } = req.params;
 	var OperStatus = 'A';
-	var query = 'UPDATE tbloperator SET OperStatus = ? WHERE OperId = ? ';
+	var query = 'UPDATE tblOperator SET OperStatus = ? WHERE OperId = ? ';
 	db.query(query, [OperStatus, OperId], (err, results) => {
 		if (!err) {
 			if (results.affectedRows === 0) {
@@ -158,7 +158,7 @@ exports.approveOperator = (req, res) => {
 
 const addAuth1 = (OperId) => {
 	var query =
-		'INSERT INTO tblauth(AuthID, MobileNo, Email, Password, Flag) SELECT OperId, OperPhone, OperEmail, OperPassword, Flag FROM tbloperator WHERE OperId= ?';
+		'INSERT INTO tblAuth(AuthID, MobileNo, Email, Password, Flag) SELECT OperId, OperPhone, OperEmail, OperPassword, Flag FROM tblOperator WHERE OperId= ?';
 	db.query(query, [OperId], (err, results) => {
 		if (!err) {
 			return console.log(results);
@@ -219,6 +219,18 @@ exports.getAllTransactions = (req, res) => {
 			return res.status(200).json({ status: 201, data: results });
 		} else {
 			return res.status(500).json({ status: 500, data: err });
+		}
+	});
+};
+
+exports.getInactiveOperators = (req, res) => {
+	let status = 'I';
+	let query = 'SELECT * FROM tblOperator WHERE OperStatus = ?';
+	db.query(query, [status], (err, results) => {
+		if (!err) {
+			res.status(200).json({ status: 201, data: results });
+		} else {
+			res.status(500).json({ status: 500, data: err });
 		}
 	});
 };

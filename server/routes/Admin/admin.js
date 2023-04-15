@@ -5,6 +5,7 @@ const {
 	login,
 	createAdmin,
 	getAllAdmins,
+	getInactiveOperators,
 	resetPassword,
 	deleteAdmin,
 	approveOperator,
@@ -18,6 +19,7 @@ const {
 router.route('/login').post(login);
 router.route('/create').post(createAdmin);
 router.route('/read').get(getAllAdmins);
+router.route('/inactiveopers').get(getInactiveOperators);
 router.route('/update/:id').patch(resetPassword);
 router.route('/update/:id').delete(deleteAdmin);
 router.route('/approve/:OperId').patch(approveOperator);

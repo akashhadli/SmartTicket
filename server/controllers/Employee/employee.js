@@ -8,7 +8,7 @@ const saltRounds = 10;
 exports.createEmployee = (req, res) => {
 	let tblEmployee = req.body;
 	const OperID = tblEmployee.operId;
-	var query1 = `SELECT Num,EmpId FROM tblemployee WHERE EmpId LIKE '%${OperID}%' ORDER BY Num DESC LIMIT 1`;
+	var query1 = `SELECT Num,EmpId FROM tblEmployee WHERE EmpId LIKE '%${OperID}%' ORDER BY Num DESC LIMIT 1`;
 	db.query(query1, (err, result) => {
 		if (!err) {
 			if (result.length > 0) {
@@ -19,7 +19,7 @@ exports.createEmployee = (req, res) => {
 				var EmpCreatedDate = moment().format('YYYY-MM-DD hh:mm:ss');
 				if (!err) {
 					var query =
-						'INSERT INTO tblemployee (Num, EmpId, EmpName, EmpIntId, EmpDOB, EmpType, EmpMobile, EmpAadhar, EmpAddr1, EmpAddr2, EmpCity, EmpPincode, EStatus,  EmpCreatedDate) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+						'INSERT INTO tblEmployee (Num, EmpId, EmpName, EmpIntId, EmpDOB, EmpType, EmpMobile, EmpAadhar, EmpAddr1, EmpAddr2, EmpCity, EmpPincode, EStatus,  EmpCreatedDate) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 					db.query(
 						query,
 						[
@@ -61,7 +61,7 @@ exports.createEmployee = (req, res) => {
 				var EmpCreatedDate = moment().format('YYYY-MM-DD hh:mm:ss');
 				if (!err) {
 					var query =
-						'INSERT INTO tblemployee (Num, EmpId, EmpName, EmpIntId, EmpDOB, EmpType, EmpMobile, EmpAadhar,  EmpAddr1, EmpAddr2, EmpCity, EmpPincode, EStatus,  EmpCreatedDate) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+						'INSERT INTO tblEmployee (Num, EmpId, EmpName, EmpIntId, EmpDOB, EmpType, EmpMobile, EmpAadhar,  EmpAddr1, EmpAddr2, EmpCity, EmpPincode, EStatus,  EmpCreatedDate) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 					db.query(
 						query,
 						[
@@ -102,9 +102,9 @@ exports.createEmployee = (req, res) => {
 
 //read Employee by operator id
 exports.readEmployee = (req, res) => {
-	let tblemployee = req.body;
-	let operID = tblemployee.operId;
-	let query = `SELECT EmpId,EmpName,EmpIntId,EmpDOB,EmpType,EStatus FROM tblemployee WHERE  EmpId LIKE '%${operID}%'`;
+	let tblEmployee = req.body;
+	let operID = tblEmployee.operId;
+	let query = `SELECT EmpId,EmpName,EmpIntId,EmpDOB,EmpType,EStatus FROM tblEmployee WHERE  EmpId LIKE '%${operID}%'`;
 	db.query(query, (err, result) => {
 		if (!err) {
 			res.status(200).json({ status: 201, data: result });
@@ -118,7 +118,7 @@ exports.readEmployee = (req, res) => {
 //get employee by id
 exports.getEmployeeById = (req, res) => {
 	const { EmpId } = req.params;
-	var query = `SELECT * FROM tblemployee WHERE EmpId = '${EmpId}'`;
+	var query = `SELECT * FROM tblEmployee WHERE EmpId = '${EmpId}'`;
 	db.query(query, (err, results) => {
 		if (!err) {
 			return res.status(200).json({ status: 201, data: results });
@@ -128,11 +128,11 @@ exports.getEmployeeById = (req, res) => {
 	});
 };
 
-//soft delete from tblemployee by id
+//soft delete from tblEmployee by id
 exports.deleteEmployee = (req, res) => {
 	const { EmpId } = req.params;
 	var EStatus = 'I';
-	var query = 'UPDATE tblemployee SET EStatus = ? WHERE EmpId = ? ';
+	var query = 'UPDATE tblEmployee SET EStatus = ? WHERE EmpId = ? ';
 	db.query(query, [EStatus, EmpId], (err, results) => {
 		if (!err) {
 			if (results.affectedRows === 0) {
@@ -153,7 +153,7 @@ exports.updateEmployee = (req, res) => {
 	const { EmpId } = req.params;
 	let tblEmployee = req.body;
 	let EmpModifyDate = moment().format('YYYY-MM-DD hh:mm:ss');
-	let query = `UPDATE tblemployee SET EmpName=?, EmpIntId=?, EmpDOB=?, EmpType=?, EmpMobile=?, EmpAadhar=?, EmpAddr1=?, EmpAddr2=?, EmpCity=?, EmpPincode=?, EmpModifyDate=?, EStatus=? WHERE EmpId  = '${EmpId}'`;
+	let query = `UPDATE tblEmployee SET EmpName=?, EmpIntId=?, EmpDOB=?, EmpType=?, EmpMobile=?, EmpAadhar=?, EmpAddr1=?, EmpAddr2=?, EmpCity=?, EmpPincode=?, EmpModifyDate=?, EStatus=? WHERE EmpId  = '${EmpId}'`;
 	db.query(
 		query,
 		[
