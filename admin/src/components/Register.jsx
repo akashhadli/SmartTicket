@@ -53,7 +53,7 @@ const Register = () => {
 	}
 
 	const getOperator = async () => {
-		const res = await axios.get('https://amsweets.in/operator/readid');
+		const res = await axios.get('http://localhost:8004/operator/readid');
 		if (res.data.status === 201) {
 			if (res.data.data === 0) {
 				setOperid('0');

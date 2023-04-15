@@ -68,7 +68,7 @@ const Asttable = () => {
 					<Opersidebar />
 					<div className='flex-col  mr-10'>
 						<div className='bg-white p-4 mt-4 mr-10 ml-8 max-h-96 items-center rounded-md w-[160%] flex-1'>
-							<h1 className='text-gray-700 text-3xl text-center font-semibold pb-1'>
+							<h1 className='text-pink-500 text-3xl text-center font-semibold pb-1'>
 								Asset Table
 							</h1>
 							<div className=' rounded-sm mt-2'>

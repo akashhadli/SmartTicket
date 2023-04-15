@@ -84,13 +84,14 @@ const Employees = () => {
 									<tbody className='justify-between  text-center'>
 										{currentItems.length > 0
 											? currentItems.map((el, i) => {
+													const opid = el.EmpId.substring(0, 3);
 													return (
 														<>
 															<tr>
 																<td className='p-1 ml-1'>
 																	{indexOfFirstItem + i + 1}
 																</td>
-																<td className='p-1 ml-1'>{el.OperName}</td>
+																<td className='p-1 ml-1'>{opid}</td>
 																<td className='p-1 ml-1'>{el.EmpName}</td>
 																<td className='p-1 ml-1'>{el.EmpMobile}</td>
 																<td className='p-1 ml-1'>

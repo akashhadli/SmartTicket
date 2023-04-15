@@ -25,7 +25,7 @@ const Operview = () => {
 		);
 		if (res.data.status === 201) {
 			alert('Operator Approved');
-			setTimeout(() => history('/dashboard'), 500);
+			setTimeout(() => history('/admin/dashboard'), 500);
 			return;
 		} else {
 			console.log('error');
@@ -82,12 +82,12 @@ const Operview = () => {
 												</span>
 											</label>
 											<div className='flex flex-row justify-center m-4'>
-												<Link to={'/opertable'}>
+												<Link to={'/admin/approveopersview'}>
 													<button className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'>
 														Cancel
 													</button>
 												</Link>
-												<Link to={`/approve/${el.OperId}`}>
+												<Link to={`/admin/approveoper/${el.OperId}`}>
 													<button
 														className='hover:bg-pink-300  px-4 py-2 rounded-lg w-max'
 														onClick={handleSub}

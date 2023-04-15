@@ -59,7 +59,7 @@ const Opersidebar = () => {
 					<div>
 						<button className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
 							<Link to='/operdashboard'>
-								<li className='flex justify-start items-center pr-1 mr-12 text-center '>
+								<li className='flex justify-start items-center pr-1 mr-4 text-center '>
 									<HiOutlineViewGrid />
 									<span className='ml-2'>Dashboard</span>
 								</li>
@@ -75,7 +75,7 @@ const Opersidebar = () => {
 								<span className='ml-2'>Employee</span>
 								<FontAwesomeIcon
 									icon={faChevronRight}
-									className={`transition-transform duration-300 ml-[60px] ${
+									className={`transition-transform duration-300 ml-[30px] ${
 										showEmployeeDropdown ? 'transform rotate-90' : ''
 									}`}
 								/>
@@ -107,7 +107,7 @@ const Opersidebar = () => {
 							className='flex justify-start items-center p-2 ml-2 mr-0 mt-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer w-max'
 							onClick={handleAssetDropdown}
 						>
-							<li className='flex justify-start items-center pr-1 mr-20 text-center'>
+							<li className='flex justify-start items-center pr-1 mr-12 text-center'>
 								<GrBus />
 								<span className='ml-2'>Asset</span>
 								<FontAwesomeIcon
@@ -144,7 +144,7 @@ const Opersidebar = () => {
 							className='flex justify-start items-center p-2 ml-2 mr-0 mt-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer w-max'
 							onClick={handleStageDropdown}
 						>
-							<li className='flex justify-start items-center pr-1 mr-20 text-center'>
+							<li className='flex justify-start items-center pr-1 mr-12 text-center'>
 								<BsFillXDiamondFill />
 								<span className='ml-2'>Stage</span>
 								<FontAwesomeIcon

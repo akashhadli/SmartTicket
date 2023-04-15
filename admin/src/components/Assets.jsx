@@ -79,16 +79,17 @@ const Assets = () => {
 											<th className='p-2 ml-1'>View</th>
 										</tr>
 									</thead>
-									<tbody className='justify-between  text-center'>
+									<tbody className='justify-between text-center'>
 										{currentItems.length > 0
 											? currentItems.map((el, i) => {
+													const opid = el.AstId.substring(0, 3);
 													return (
 														<>
 															<tr>
 																<td className='p-1 ml-1'>
 																	{indexOfFirstItem + i + 1}
 																</td>
-																<td className='p-1 ml-1'>{el.OperName}</td>
+																<td className='p-1 ml-1'>{opid}</td>
 																<td className='p-1 ml-1'>{el.AstName}</td>
 																<td className='p-1 ml-1'>{el.AstModel}</td>
 																<td className='p-1 ml-1'>{el.AStatus}</td>

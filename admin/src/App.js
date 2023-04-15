@@ -39,10 +39,10 @@ function App() {
 				<Route path='/register' element={<Register />} />
 				<Route path='/admin/dashboard' element={<Dashboard />} />
 				<Route path='/admin/addAdmin' element={<AdmiCreate />} />
-				<Route path='/opertable' element={<Opertable />} />
+				<Route path='admin/approveopersview' element={<Opertable />} />
+				<Route path='/admin/approveoper/:OperId' element={<Operview />} />
 				<Route path='/operdashboard' element={<Operdashboard />} />
 				<Route path='/approve/:OperId' element={<Opertable />} />
-				<Route path='/operator/:OperId' element={<Operview />} />
 				<Route path='/empregister' element={<Empregister />} />
 				<Route path='/empupdate/:EmpId' element={<Empedit />} />
 				<Route path='/empview' element={<Emptable />} />
