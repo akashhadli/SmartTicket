@@ -62,8 +62,8 @@ const Assets = () => {
 			<div>
 				<div className='flex flex-row gap-10'>
 					<Sidebar />
-					<div className='flex-col mr-8'>
-						<div className='bg-white mt-10 pl-40 items-center rounded-md w-[160%] flex-1'>
+					<div className='flex-col mt-10 ml-5'>
+						<div className='bg-white pl-1 pt-1 justify-center items-center rounded-md sm:w-[120%] lg:w-[150%] xl:w-[170%] 2xl:w-[200%] flex-1'>
 							<h1 className='text-pink-500 text-3xl text-center font-semibold pb-1'>
 								Assets Table
 							</h1>

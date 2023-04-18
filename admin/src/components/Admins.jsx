@@ -62,8 +62,8 @@ const Admins = () => {
 			<div>
 				<div className='flex flex-row gap-10'>
 					<Sidebar />
-					<div className='flex-col mr-8'>
-						<div className='bg-white pl-10 pt-1 mt-10 mr-10 ml-8 items-center rounded-md w-[160%] flex-1'>
+					<div className='flex-col mt-10 ml-5'>
+						<div className='bg-white pl-1 pt-1 justify-center items-center rounded-md sm:w-[100%] lg:w-[120%] xl:w-[150%] 2xl:w-[180%] flex-1'>
 							<h1 className='text-pink-500 text-3xl text-center font-semibold pb-1'>
 								Admins Table
 							</h1>
