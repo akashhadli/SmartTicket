@@ -17,6 +17,22 @@ exports.getTransID = (req, res) => {
 	let minutes = date.getMinutes();
 	let seconds = date.getSeconds();
 
+	if (date < 10) {
+		date = '0' + date;
+	}
+	if (month < 10) {
+		month = '0' + month;
+	}
+	if (hours < 10) {
+		hours = '0' + hours;
+	}
+	if (minutes < 10) {
+		minutes = '0' + minutes;
+	}
+	if (seconds < 10) {
+		seconds = '0' + seconds;
+	}
+
 	const orderTimeStamp =
 		year +
 		'-' +
@@ -31,13 +47,6 @@ exports.getTransID = (req, res) => {
 		seconds;
 	console.log(orderTimeStamp);
 
-	if (date < 10) {
-		date = '0' + date;
-	}
-	if (month < 10) {
-		month = '0' + month;
-	}
-
 	let slicedyear = year.toString().slice(2, 4);
 
 	// This arrangement can be altered based on how we want the date's format to appear.
@@ -45,11 +54,11 @@ exports.getTransID = (req, res) => {
 	var OrderID = `T${currentDate}` + `${Tid}`;
 	console.log(OrderID);
 	query =
-		'INSERT INTO tblTransaction (UserId, RouteName, StartStage, EndStage, Fare, OrderID, OrderTimeStamp) VALUES(?, ?, ?, ?, ?, ?, ?)';
+		'INSERT INTO tblTransaction (Id, RouteName, StartStage, EndStage, Fare, OrderID, OrderTimeStamp) VALUES(?, ?, ?, ?, ?, ?, ?)';
 	db.query(
 		query,
 		[
-			transData.UserId,
+			transData.Id,
 			transData.RouteName,
 			transData.StartStage,
 			transData.EndStage,
@@ -61,7 +70,7 @@ exports.getTransID = (req, res) => {
 			if (!err) {
 				return res.status(200).json({
 					message: 'OrderID generated',
-					data: { id: `${OrderID}` },
+					data: { orderid: `${OrderID}` },
 				});
 			} else {
 				return res.status(500).json(err);
@@ -75,13 +84,13 @@ exports.getPaymentInfo = (req, res) => {
 	let payData = req.body;
 	let oid = payData.OrderID;
 	let query =
-		'UPDATE tblTransaction SET TransactionID = ?, Status = ?, TimeStamp = ? WHERE OrderID = ?';
+		'UPDATE tblTransaction SET TransactionID = ?, TransactionTimeStamp = ?, Status = ? WHERE OrderID = ?';
 	db.query(
 		query,
-		[payData.transid, payData.status, payData.timestamp, oid],
+		[payData.transid, payData.timestamp, payData.tstatus, oid],
 		(err, results) => {
 			if (!err) {
-				res.json({ message: 'Edit Success' });
+				res.json({ message: 'Edit Success', time: `${payData.timestamp}` });
 			} else {
 				res.json({ message: 'Edit Failure' });
 			}
@@ -93,6 +102,8 @@ exports.getPaymentInfo = (req, res) => {
 exports.createTransQR = async (req, res) => {
 	const qrstring = req.body;
 	const oid = qrstring.orderid;
+	const Tgen = qrstring.Tgen;
+	const qrstatus = 'A';
 
 	const data = JSON.stringify(qrstring);
 
@@ -100,10 +111,11 @@ exports.createTransQR = async (req, res) => {
 	const qrCodeData = qr.imageSync(data, { type: 'png' }); // Get the QR code image data as a buffer
 	var QRVal = qrCodeData.toString('base64');
 
-	const query = 'UPDATE tblTransaction SET QR = ? WHERE OrderID = ?';
-	db.query(query, [QRVal, oid], (err, result) => {
+	const query =
+		'UPDATE tblTransaction SET QR = ?, QRStatus = ?, Tdata = ?, Tgen = ? WHERE OrderID = ?';
+	db.query(query, [QRVal, qrstatus, data, Tgen, oid], (err, result) => {
 		if (!err) {
-			res.send(qrCodeData.toString('base64')); // Send the QR code image data as the response
+			res.send(QRVal); // Send the QR code image data as the response
 			return;
 		} else {
 			res.send(err);
@@ -112,9 +124,10 @@ exports.createTransQR = async (req, res) => {
 };
 
 // qrverify
-exports.transQRVerify = (req, res) => {
+exports.transQRVerify = async (req, res) => {
 	let payData = req.body;
 	let oid = payData.OrderID;
+	console.log(payData);
 	let qrok = 'I';
 	let query = 'SELECT QRStatus FROM tblTransaction WHERE OrderID = ?';
 	db.query(query, [oid], (err, results) => {
@@ -129,6 +142,19 @@ exports.transQRVerify = (req, res) => {
 			} else {
 				res.json({ message: 'Not OK' });
 			}
+		}
+	});
+};
+
+// transaction history
+exports.getHistory = async (req, res) => {
+	let uid = req.body.UserId;
+	var query = 'SELECT Tdata FROM tblTransaction WHERE Id = ?';
+	db.query(query, [uid], (err, results) => {
+		if (!err) {
+			res.json(results);
+		} else {
+			res.send(err);
 		}
 	});
 };

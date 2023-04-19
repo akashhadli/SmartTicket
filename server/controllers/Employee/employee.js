@@ -185,3 +185,74 @@ exports.updateEmployee = (req, res) => {
 		}
 	);
 };
+
+//get routeid for conductor issue ticket
+exports.getRouteId = (req, res) => {
+	const eid = req.body.EmpId;
+	let query = 'SELECT RouteID, revRoute FROM tblAssetRouteMap WHERE EmpId = ?';
+	db.query(query, [eid], (err, results) => {
+		if (!err) {
+			return res.json(results[results.length - 1]);
+		} else {
+			res.send(err);
+		}
+	});
+};
+
+// Get asset and route id
+exports.astroid = (req, res) => {
+	const eid = req.body.EmpId;
+	let query =
+		'SELECT AstId, RouteID, revRoute, Time FROM tblAssetRouteMap WHERE EmpId = ?';
+	db.query(query, [eid], (err, results) => {
+		if (!err) {
+			return res.send(results);
+		} else {
+			res.send(err);
+		}
+	});
+};
+
+// Get Individual Trip Amounts
+exports.tripAmounnt = async (req, res) => {
+	let data = req.body;
+	let astid = data.AstId;
+	let routeid = data.RouteID;
+	let fromTime = data.fromTime;
+	let toTime = data.toTime;
+	var AstRegNo;
+	var RouteName;
+	let query = 'SELECT AstRegNo FROM tblAsset WHERE AstId = ?';
+	db.query(query, [astid], (err, results) => {
+		if (!err) {
+			console.log(results[0]);
+			AstRegNo = results[0].AstRegNo;
+			let query1 = 'SELECT RouteName FROM tblRouteMaster WHERE RouteID = ?';
+			db.query(query1, [routeid], (err, results) => {
+				console.log(results[0]);
+				if (!err) {
+					RouteName = results[0].RouteName;
+					let query2 = `SELECT Fare FROM tblTransaction WHERE OrderTimeStamp BETWEEN '${fromTime}' AND '${toTime}'`;
+					db.query(query2, (err, results) => {
+						let date = fromTime.substring(0, 10);
+						let totalFare = 0;
+						for (let i = 0; i < results.length; i++) {
+							totalFare = results[i].Fare + totalFare;
+						}
+						if (!err) {
+							console.log(totalFare);
+							res.json({
+								AstRegNo: `${AstRegNo}`,
+								RouteName: `${RouteName}`,
+								TotalFare: `${totalFare}`,
+								date: `${date}`,
+							});
+						}
+					});
+				}
+			});
+		} else {
+			res.send(err);
+		}
+	});
+};
