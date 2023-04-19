@@ -13,6 +13,7 @@ import { GiPoliceOfficerHead } from 'react-icons/gi';
 import { BiShowAlt } from 'react-icons/bi';
 import { FaUser } from 'react-icons/fa';
 import { ImUser } from 'react-icons/im';
+import { IoTicketOutline } from 'react-icons/io5';
 
 const Sidebar = () => {
 	const [showOperatorDropdown, setShowOperatorDropdown] = useState(false);
@@ -151,6 +152,12 @@ const Sidebar = () => {
 						<li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
 							<ImUser />
 							<span className='ml-1'>Users</span>
+						</li>
+					</Link>
+					<Link to='/admin/ticket-type'>
+						<li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
+							<IoTicketOutline />
+							<span className='ml-1'>Ticket Type</span>
 						</li>
 					</Link>
 				</ul>

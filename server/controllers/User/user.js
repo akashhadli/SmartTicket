@@ -10,7 +10,7 @@ const saltRounds = 10;
 // CREATE A NEW EMPLOYEE
 exports.register = (req, res) => {
 	let tblCommuter = req.body;
-	var query1 = `SELECT Num,UserId FROM tblCommuter ORDER BY Num DESC LIMIT 1`;
+	var query1 = `SELECT Num, UserId FROM tblCommuter ORDER BY Num DESC LIMIT 1`;
 	db.query(query1, (err, result) => {
 		if (!err) {
 			if (result.length > 0) {

@@ -30,6 +30,7 @@ import ViewOperator from './components/ViewOperator';
 import ViewEmployee from './components/ViewEmployee';
 import ViewAsset from './components/ViewAsset';
 import AdmiCreate from './components/AdmiCreate';
+import TicketType from './components/TicketType';
 
 function App() {
 	return (
@@ -68,6 +69,7 @@ function App() {
 				<Route path='/admin/adminview/:AdminId' element={<ViewAdmin />} />
 				<Route path='/admin/usersview' element={<Users />} />
 				<Route path='/admin/usersview/:UserId' element={<ViewUser />} />
+				<Route path='/admin/ticket-type' element={<TicketType />} />
 			</Routes>
 		</BrowserRouter>
 	);
