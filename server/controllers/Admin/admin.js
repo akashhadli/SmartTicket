@@ -234,3 +234,48 @@ exports.getInactiveOperators = (req, res) => {
 		}
 	});
 };
+
+exports.getAllTicketTypes = (req, res) => {
+	var query = 'SELECT * FROM tblTicketType';
+	db.query(query, (err, results) => {
+		if (!err) {
+			return res.status(200).json({ status: 201, data: results });
+		} else {
+			return res.status(500).json({ status: 500, data: err });
+		}
+	});
+};
+
+// activate ticket type
+exports.activateTicketType = (req, res) => {
+	const TTid = req.body.id;
+	var TTstatus = 'A';
+	var query = 'UPDATE tblTicketType SET TTstatus = ? WHERE TTid = ? ';
+	db.query(query, [TTstatus, TTid], (err, results) => {
+		if (!err) {
+			if (results.affectedRows === 0) {
+				return res.status(404).json({ message: 'Ticket Type Not Found' });
+			}
+			return res.status(201).json({ status: 201, data: results });
+		} else {
+			return res.status(500).json(err);
+		}
+	});
+};
+
+// deactivate ticket type
+exports.deactivateTicketType = (req, res) => {
+	const TTid = req.body.id;
+	var TTstatus = 'I';
+	var query = 'UPDATE tblTicketType SET TTstatus = ? WHERE TTid = ? ';
+	db.query(query, [TTstatus, TTid], (err, results) => {
+		if (!err) {
+			if (results.affectedRows === 0) {
+				return res.status(404).json({ message: 'Ticket Type Not Found' });
+			}
+			return res.status(201).json({ status: 201, data: results });
+		} else {
+			return res.status(500).json(err);
+		}
+	});
+};

@@ -64,3 +64,16 @@ exports.getUserById = (req, res) => {
 		}
 	});
 };
+
+//get ticket type by id
+exports.getTicketTypeById = (req, res) => {
+	const { TTid } = req.params;
+	var query = `SELECT * FROM tblTicketType WHERE TTid = '${TTid}'`;
+	db.query(query, (err, results) => {
+		if (!err) {
+			return res.status(200).json({ status: 201, data: results });
+		} else {
+			return res.status(500).json({ status: 500, data: err });
+		}
+	});
+};

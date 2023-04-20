@@ -18,6 +18,7 @@ import { IoTicketOutline } from 'react-icons/io5';
 const Sidebar = () => {
 	const [showOperatorDropdown, setShowOperatorDropdown] = useState(false);
 	const [showTeamDropdown, setShowTeamDropdown] = useState(false);
+	const [showTTDropdown, setShowTTDropdown] = useState(false);
 
 	const history = useNavigate();
 
@@ -30,6 +31,9 @@ const Sidebar = () => {
 	};
 	const handleTeamDropdown = () => {
 		setShowTeamDropdown(!showTeamDropdown);
+	};
+	const handleTTDropdown = () => {
+		setShowTTDropdown(!showTTDropdown);
 	};
 
 	useEffect(() => {
@@ -154,12 +158,43 @@ const Sidebar = () => {
 							<span className='ml-1'>Users</span>
 						</li>
 					</Link>
-					<Link to='/admin/ticket-type'>
-						<li className=' flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
-							<IoTicketOutline />
-							<span className='ml-1'>Ticket Type</span>
-						</li>
-					</Link>
+					<div>
+						<button
+							className='flex justify-start items-center p-2 ml-2 mr-0 mt-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer w-max'
+							onClick={handleTTDropdown}
+						>
+							<li className='flex justify-start items-center pr-12 text-center'>
+								<IoTicketOutline />
+								<span className='ml-2'>Ticket Type</span>
+								<FontAwesomeIcon
+									icon={faChevronRight}
+									className={`ml-auto transition-transform duration-300 ml-[81px] ${
+										showTTDropdown ? 'transform rotate-90' : ''
+									}`}
+								/>
+							</li>
+						</button>
+						{showTTDropdown && (
+							<div className=' mt-2'>
+								<Link to='/admin/ticket-type/add'>
+									<button className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
+										<li className='flex justify-start items-center pr-1 mr-4 text-center'>
+											<BsFillPersonPlusFill />
+											<span className='ml-2'>Add Ticket Type</span>
+										</li>
+									</button>
+								</Link>
+								<Link to='/admin/ticket-types'>
+									<button className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
+										<li className='flex justify-start items-center pr-1 mr-4 text-center'>
+											<BiShowAlt />
+											<span className='ml-2'>Show Ticket Type</span>
+										</li>
+									</button>
+								</Link>
+							</div>
+						)}
+					</div>
 				</ul>
 			</div>
 			<div className='opacity-70'>
