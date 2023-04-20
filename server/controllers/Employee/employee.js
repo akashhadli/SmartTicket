@@ -220,32 +220,50 @@ exports.tripAmounnt = async (req, res) => {
 	let routeid = data.RouteID;
 	let fromTime = data.fromTime;
 	let toTime = data.toTime;
+	let revRoute = data.revRoute;
 	var AstRegNo;
 	var RouteName;
 	let query = 'SELECT AstRegNo FROM tblAsset WHERE AstId = ?';
 	db.query(query, [astid], (err, results) => {
 		if (!err) {
-			console.log(results[0]);
 			AstRegNo = results[0].AstRegNo;
 			let query1 = 'SELECT RouteName FROM tblRouteMaster WHERE RouteID = ?';
 			db.query(query1, [routeid], (err, results) => {
-				console.log(results[0]);
 				if (!err) {
 					RouteName = results[0].RouteName;
-					let query2 = `SELECT Fare FROM tblTransaction WHERE OrderTimeStamp BETWEEN '${fromTime}' AND '${toTime}'`;
+					let query2 = `SELECT Fare, Tgen FROM tblTransaction WHERE OrderTimeStamp BETWEEN '${fromTime}' AND '${toTime}'`;
 					db.query(query2, (err, results) => {
 						let date = fromTime.substring(0, 10);
+						let cashFare = 0;
+						let qrFare = 0;
 						let totalFare = 0;
+						let cashpeeps = 0;
+						let qrpeeps = 0;
+						let totalpeeps = 0;
 						for (let i = 0; i < results.length; i++) {
-							totalFare = results[i].Fare + totalFare;
+							if (results[i].Tgen === 'E') {
+								cashFare = results[i].Fare + cashFare;
+								cashpeeps++;
+							}
+							if (results[i].Tgen === 'Q') {
+								qrFare = results[i].Fare + qrFare;
+								qrpeeps++;
+							}
 						}
+						totalFare = cashFare + qrFare;
+						totalpeeps = cashpeeps + qrpeeps;
 						if (!err) {
-							console.log(totalFare);
 							res.json({
 								AstRegNo: `${AstRegNo}`,
 								RouteName: `${RouteName}`,
-								TotalFare: `${totalFare}`,
+								cashFare: `${cashFare}`,
+								qrFare: `${qrFare}`,
+								totalFare: `${totalFare}`,
+								cashpeeps: `${cashpeeps}`,
+								qrpeeps: `${qrpeeps}`,
+								totalpeeps: `${totalpeeps}`,
 								date: `${date}`,
+								revRoute: `${revRoute}`,
 							});
 						}
 					});
