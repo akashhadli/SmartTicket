@@ -248,7 +248,7 @@ exports.getAllTicketTypes = (req, res) => {
 
 // activate ticket type
 exports.activateTicketType = (req, res) => {
-	const TTid = req.body.id;
+	const { TTid } = req.params;
 	var TTstatus = 'A';
 	var query = 'UPDATE tblTicketType SET TTstatus = ? WHERE TTid = ? ';
 	db.query(query, [TTstatus, TTid], (err, results) => {
@@ -265,7 +265,7 @@ exports.activateTicketType = (req, res) => {
 
 // deactivate ticket type
 exports.deactivateTicketType = (req, res) => {
-	const TTid = req.body.id;
+	const { TTid } = req.params;
 	var TTstatus = 'I';
 	var query = 'UPDATE tblTicketType SET TTstatus = ? WHERE TTid = ? ';
 	db.query(query, [TTstatus, TTid], (err, results) => {
