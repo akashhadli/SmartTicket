@@ -22,6 +22,8 @@ const getRoute = require('./routes/GetRoute/getRoute');
 const getStage = require('./routes/GetStage/getStage');
 const getFare = require('./routes/CalculateFare/fare');
 const getTransactionId = require('./routes/Transaction/transaction');
+const getTicketType = require('./routes/TicketType/tickettype');
+const getStagePass = require('./routes/StagePass/stagePass');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -45,6 +47,8 @@ app.use('/getRoute', getRoute);
 app.use('/getStage', getStage);
 app.use('/getFare', getFare);
 app.use('/transaction', getTransactionId);
+app.use('/ticket', getTicketType);
+app.use('/stage', getStagePass);
 
 app.listen(port, () => {
 	console.log(`server listening on ${port}`);
