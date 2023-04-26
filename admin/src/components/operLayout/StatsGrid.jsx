@@ -7,17 +7,19 @@ import { BsFillXDiamondFill } from 'react-icons/bs';
 import axios from 'axios';
 const StatsGrid = () => {
 	const history = useNavigate();
-	// total operators data
+	// total asset data
 	const [data, setData] = useState('');
-	//total employees data
+	//total employee data
 	const [data1, setData1] = useState('');
-	//total users data
+	//total stage data
 	const [data2, setData2] = useState('');
-	// total assets data
-	const [data3, setData3] = useState('');
+	const ID = window.localStorage.getItem('OperID');
+	var operId = JSON.parse(ID);
 
-	const getOperatorsData = async () => {
-		const res = await axios.get('http://localhost:8004/admin/operators');
+	const getAstData = async () => {
+		const res = await axios.post('http://localhost:8004/operator/readast', {
+			operId,
+		});
 		if (res.data.status === 201) {
 			setData(res.data.data);
 		} else {
@@ -25,8 +27,10 @@ const StatsGrid = () => {
 		}
 	};
 
-	const getEmployeesData = async () => {
-		const res = await axios.get('http://localhost:8004/admin/employees');
+	const getEmpData = async () => {
+		const res = await axios.post('http://localhost:8004/employee/reademp', {
+			operId,
+		});
 		if (res.data.status === 201) {
 			setData1(res.data.data);
 		} else {
@@ -34,8 +38,10 @@ const StatsGrid = () => {
 		}
 	};
 
-	const getAssetsData = async () => {
-		const res = await axios.get('http://localhost:8004/admin/assets');
+	const getStgData = async () => {
+		const res = await axios.post('http://localhost:8004/operator/readstg', {
+			operId,
+		});
 		if (res.data.status === 201) {
 			setData2(res.data.data);
 		} else {
@@ -43,26 +49,14 @@ const StatsGrid = () => {
 		}
 	};
 
-	const getUsersData = async () => {
-		const res = await axios.get('http://localhost:8004/admin/users');
-		if (res.data.status === 201) {
-			setData3(res.data.data);
-		} else {
-			console.log('error');
-		}
-	};
-
 	const handleClick = () => {
-		history('/admin/operatorsview');
+		history('/astview');
 	};
 	const handleClick1 = () => {
-		history('/admin/employeesview');
+		history('/empview');
 	};
 	const handleClick2 = () => {
-		history('/admin/assetsview');
-	};
-	const handleClick3 = () => {
-		history('/admin/usersview');
+		history('/stgview');
 	};
 	useEffect(() => {
 		const token = window.localStorage.getItem('Lekpay');
@@ -70,27 +64,26 @@ const StatsGrid = () => {
 		if (!Token) {
 			history('/');
 		} else {
-			getOperatorsData();
-			getEmployeesData();
-			getAssetsData();
-			getUsersData();
+			getAstData();
+			getEmpData();
+			getStgData();
 		}
 	}, []);
 	return (
-		<div className='grid md:grid-cols-3 gap-6 w-[98%] lg:grid-cols-5 gap-6 lg:w-[98%] mt-4 ml-0 '>
+		<div className='grid md:grid-cols-5 gap-4 md:w-[98%] w-[20rem] mt-4 ml-0 '>
 			<BoxWrapper>
 				<div
-					className='rounded-full h-12 w-12 flex items-center justify-center bg-pink-400 cursor-pointer'
+					className='rounded-full h-12 w-12 flex items-center justify-center bg-sky-400 cursor-pointer'
 					onClick={handleClick}
 				>
-					<IoPeople
-						className='text-2xl text-black'
+					<MdOutlineDirectionsBusFilled
+						className='text-2xl text-white '
 						style={{ color: 'white' }}
 					/>
 				</div>
 				<div className='pl-4 cursor-pointer' onClick={handleClick}>
 					<span className='text-sm text-gray-500 font-medium'>
-						Total No. Of Operators
+						Total Assets
 					</span>
 					<div className='flex items-center'>
 						<strong className='text-xl text-gray-700 font-semibold'>
@@ -111,53 +104,11 @@ const StatsGrid = () => {
 				</div>
 				<div className='pl-4 cursor-pointer' onClick={handleClick1}>
 					<span className='text-sm text-gray-500 font-medium'>
-						Total No. Of Employees
+						Total Employee
 					</span>
 					<div className='flex items-center'>
 						<strong className='text-xl text-gray-700 font-semibold'>
 							{data1.length}
-						</strong>
-					</div>
-				</div>
-			</BoxWrapper>
-			<BoxWrapper>
-				<div
-					className='rounded-full h-12 w-12 flex items-center justify-center bg-sky-400 cursor-pointer'
-					onClick={handleClick2}
-				>
-					<MdOutlineDirectionsBusFilled
-						className='text-2xl text-white '
-						style={{ color: 'white' }}
-					/>
-				</div>
-				<div className='pl-4 cursor-pointer' onClick={handleClick2}>
-					<span className='text-sm text-gray-500 font-medium'>
-						Total No. Of Assets
-					</span>
-					<div className='flex items-center'>
-						<strong className='text-xl text-gray-700 font-semibold'>
-							{data2.length}
-						</strong>
-					</div>
-				</div>
-			</BoxWrapper>
-			<BoxWrapper>
-				<div
-					className='rounded-full h-12 w-12 flex items-center justify-center bg-teal-600 cursor-pointer'
-					onClick={handleClick3}
-				>
-					<BsFillXDiamondFill
-						className='text-2xl text-white '
-						style={{ color: 'white' }}
-					/>
-				</div>
-				<div className='pl-4 cursor-pointer' onClick={handleClick3}>
-					<span className='text-sm text-gray-500 font-medium'>
-						Total No. Of Users
-					</span>
-					<div className='flex items-center'>
-						<strong className='text-xl text-gray-700 font-semibold'>
-							{data3.length}
 						</strong>
 					</div>
 				</div>
@@ -179,6 +130,43 @@ const StatsGrid = () => {
 						</span>
 						<strong className='text-xl text-gray-700 font-semibold'>
 							10000
+						</strong>
+					</div>
+				</div>
+			</BoxWrapper>
+			<BoxWrapper>
+				<div className='rounded-full h-12 w-12 flex items-center justify-center bg-green-600 cursor-pointer'>
+					<MdOutlineDirectionsBusFilled
+						className='text-2xl text-black'
+						style={{ color: 'white' }}
+					/>
+				</div>
+				<div className='pl-4 cursor-pointer'>
+					<span className='text-sm text-gray-500 font-medium'>
+						Active Asset
+					</span>
+					<div className='flex items-center'>
+						<strong className='text-xl text-gray-700 font-semibold'>2</strong>
+					</div>
+				</div>
+			</BoxWrapper>
+			<BoxWrapper>
+				<div
+					className='rounded-full h-12 w-12 flex items-center justify-center bg-teal-600 cursor-pointer'
+					onClick={handleClick2}
+				>
+					<BsFillXDiamondFill
+						className='text-2xl text-white '
+						style={{ color: 'white' }}
+					/>
+				</div>
+				<div className='pl-4 cursor-pointer' onClick={handleClick2}>
+					<span className='text-sm text-gray-500 font-medium'>
+						Total Stages
+					</span>
+					<div className='flex items-center'>
+						<strong className='text-xl text-gray-700 font-semibold'>
+							{data2.length}
 						</strong>
 					</div>
 				</div>

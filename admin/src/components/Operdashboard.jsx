@@ -3,9 +3,9 @@ import Opersidebar from './Opersidebar';
 import { useNavigate } from 'react-router-dom';
 // import Asttable from './Asttable';
 // import Emptable from './Emptable';
-import Header from './AdminLayout/Header';
-import StatsGrid from './AdminLayout/StatsGrid';
-import TransactionChart from './AdminLayout/TransactionChart';
+import Header from './operLayout/Header';
+import StatsGrid from './operLayout/StatsGrid';
+import TransactionChart from './operLayout/TransactionChart';
 
 const Operdashboard = () => {
 	const history = useNavigate();

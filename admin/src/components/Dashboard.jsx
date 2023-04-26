@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 // import Dheader from './Dheader';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
-import Header from './operLayout/Header';
-import StatsGrid from './operLayout/StatsGrid';
-import TransactionChart from './operLayout/TransactionChart';
+import Header from './AdminLayout/Header';
+import StatsGrid from './AdminLayout/StatsGrid';
+import TransactionChart from './AdminLayout/TransactionChart';
 
 const Dashboard = () => {
 	const history = useNavigate();
