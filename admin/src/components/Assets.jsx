@@ -12,7 +12,7 @@ const Assets = () => {
 	const [itemsPerPage, setItemsPerPage] = useState(10);
 	const history = useNavigate();
 
-	const getTransactionsData = async () => {
+	const getAssetsData = async () => {
 		const res = await axios.get('http://localhost:8004/admin/assets');
 		if (res.data.status === 201) {
 			setData(res.data.data);
@@ -53,7 +53,7 @@ const Assets = () => {
 		if (!Token) {
 			history('/');
 		} else {
-			getTransactionsData();
+			getAssetsData();
 		}
 	}, []);
 

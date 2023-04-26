@@ -3,6 +3,9 @@ import React, { useEffect } from 'react';
 // import Dheader from './Dheader';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
+import Header from './operLayout/Header';
+import StatsGrid from './operLayout/StatsGrid';
+import TransactionChart from './operLayout/TransactionChart';
 
 const Dashboard = () => {
 	const history = useNavigate();
@@ -16,9 +19,15 @@ const Dashboard = () => {
 	}, []);
 
 	return (
-		<div className='flex flex-row gap-4 bg-gray-50'>
+		<div className='flex gap-4 bg-gray-50'>
 			<Sidebar />
-			<div className='justify-center text-center m-auto'>Dashboard</div>
+			<div className='flex flex-col flex-1'>
+				<Header />
+				<div className='flex flex-col gap-4'>
+					<StatsGrid />
+					<TransactionChart />
+				</div>
+			</div>
 		</div>
 	);
 };
