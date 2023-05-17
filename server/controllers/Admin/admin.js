@@ -97,7 +97,7 @@ const addAuth = (AdminId) => {
 };
 
 exports.getAllAdmins = (req, res) => {
-	var query = 'SELECT * FROM tblLPAdm';
+	var query = 'SELECT * FROM tblLPAdm ORDER BY Num ASC';
 	db.query(query, (err, results) => {
 		if (!err) {
 			return res.status(200).json({ status: 201, data: results });
@@ -169,7 +169,8 @@ const addAuth1 = (OperId) => {
 };
 
 exports.getAllAssets = (req, res) => {
-	var query = 'SELECT * FROM tblAsset';
+	var query =
+		'SELECT AstId, AstName, AstRegNo, AstModel, AStatus FROM tblAsset';
 	db.query(query, (err, results) => {
 		if (!err) {
 			return res.status(200).json({ status: 201, data: results });
@@ -179,8 +180,37 @@ exports.getAllAssets = (req, res) => {
 	});
 };
 
+const assetRegNo = (totalAsset) => {
+	return new Promise((resolve, reject) => {
+		let Asset = [];
+		const queries = totalAsset.map((asset) => {
+			return new Promise((resolve, reject) => {
+				let query = 'SELECT AstRegNo FROM tblAsset WHERE AstId = ?';
+				db.query(query, [asset], (err, result) => {
+					if (!err) {
+						if (result.length > 0) {
+							Asset.push(result[0].AstRegNo);
+						}
+						resolve();
+					} else {
+						reject(err);
+					}
+				});
+			});
+		});
+
+		Promise.all(queries)
+			.then(() => {
+				resolve(Asset);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
 exports.getAllOperators = (req, res) => {
-	var query = 'SELECT * FROM tblOperator';
+	var query = 'SELECT * FROM tblOperator ORDER BY Num ASC';
 	db.query(query, (err, results) => {
 		if (!err) {
 			return res.status(200).json({ status: 201, data: results });
@@ -202,7 +232,7 @@ exports.getAllEmployees = (req, res) => {
 };
 
 exports.getAllUsers = (req, res) => {
-	var query = 'SELECT * FROM tblCommuter';
+	var query = 'SELECT * FROM tblCommuter ORDER BY Num ASC';
 	db.query(query, (err, results) => {
 		if (!err) {
 			return res.status(200).json({ status: 201, data: results });
@@ -236,7 +266,7 @@ exports.getInactiveOperators = (req, res) => {
 };
 
 exports.getAllTicketTypes = (req, res) => {
-	var query = 'SELECT * FROM tblTicketType';
+	var query = 'SELECT * FROM tblTicketType ORDER BY Num ASC';
 	db.query(query, (err, results) => {
 		if (!err) {
 			return res.status(200).json({ status: 201, data: results });

@@ -7,6 +7,7 @@ const {
 	createTransQR,
 	transQRVerify,
 	getHistory,
+	getLasTicket,
 } = require('../../controllers/Transaction/transaction');
 
 router.route('/id').post(getTransID);
@@ -14,5 +15,6 @@ router.route('/pay').post(getPaymentInfo);
 router.route('/qr').post(createTransQR);
 router.route('/qrverify').post(transQRVerify);
 router.route('/history').post(getHistory);
+router.route('/last-ticket').post(getLasTicket);
 
 module.exports = router;

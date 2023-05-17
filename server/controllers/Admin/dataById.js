@@ -77,3 +77,16 @@ exports.getTicketTypeById = (req, res) => {
 		}
 	});
 };
+
+// get employees data by operid
+exports.getEmpByOperId = (req, res) => {
+	const { opid } = req.params;
+	var query = `SELECT * FROM tblEmployee WHERE EmpId = '${opid}'`;
+	db.query(query, (err, results) => {
+		if (!err) {
+			return res.status(200).json({ status: 201, data: results });
+		} else {
+			return res.status(500).json({ status: 500, data: err });
+		}
+	});
+};

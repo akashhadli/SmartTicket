@@ -3,22 +3,25 @@ const moment = require('moment');
 const qr = require('qr-image');
 var id = 0;
 
+// CREATE TRANSACTION ID
 exports.getTransID = (req, res) => {
-	id = id + 1;
-	var Tid = '0' + id;
 	let transData = req.body;
 	let date = new Date();
 
 	let day = date.getDate();
+
 	let month = date.getMonth() + 1;
+
 	let year = date.getFullYear();
 
 	let hours = date.getHours();
+
 	let minutes = date.getMinutes();
+
 	let seconds = date.getSeconds();
 
-	if (date < 10) {
-		date = '0' + date;
+	if (day < 10) {
+		day = '0' + day;
 	}
 	if (month < 10) {
 		month = '0' + month;
@@ -51,32 +54,88 @@ exports.getTransID = (req, res) => {
 
 	// This arrangement can be altered based on how we want the date's format to appear.
 	let currentDate = `${slicedyear}${month}${day}`; // "YYMMDD"
-	var OrderID = `T${currentDate}` + `${Tid}`;
-	console.log(OrderID);
-	query =
-		'INSERT INTO tblTransaction (Id, RouteName, StartStage, EndStage, Fare, OrderID, OrderTimeStamp) VALUES(?, ?, ?, ?, ?, ?, ?)';
-	db.query(
-		query,
-		[
-			transData.Id,
-			transData.RouteName,
-			transData.StartStage,
-			transData.EndStage,
-			transData.Fare,
-			OrderID,
-			orderTimeStamp,
-		],
-		(err, result) => {
-			if (!err) {
-				return res.status(200).json({
-					message: 'OrderID generated',
-					data: { orderid: `${OrderID}` },
-				});
+	console.log('out', currentDate);
+	var query1 = `SELECT Num, OrderID FROM tblTransaction WHERE OrderID LIKE '%${currentDate}%' ORDER BY Num DESC LIMIT 1`;
+	db.query(query1, (err, result) => {
+		if (!err) {
+			if (result.length > 0) {
+				let num = parseInt(result[0].Num);
+				let Num = num + 1;
+				var OrderID = `T${currentDate}${Num}`;
+				console.log('first', OrderID);
+				if (!err) {
+					var query =
+						'INSERT INTO tblTransaction (Num, Id, RouteName, StartStage, EndStage, Passengers, Fare, TType, OrderID, OrderTimeStamp) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+					db.query(
+						query,
+						[
+							Num,
+							transData.Id,
+							transData.RouteName,
+							transData.StartStage,
+							transData.EndStage,
+							transData.Passengers,
+							transData.Fare,
+							transData.Ttype,
+							OrderID,
+							orderTimeStamp,
+						],
+						(err, results) => {
+							if (!err) {
+								return res.status(200).json({
+									message: 'OrderID generated',
+									data: { orderid: `${OrderID}` },
+								});
+							} else {
+								return res.status(500).json(err);
+							}
+						}
+					);
+					return;
+				} else {
+					console.log(err);
+				}
 			} else {
-				return res.status(500).json(err);
+				let Num = result.length;
+				Num = Num + 1;
+				var OrderID = `T${currentDate}${Num}`;
+				console.log('second', OrderID);
+				if (!err) {
+					var query =
+						'INSERT INTO tblTransaction (Num, Id, RouteName, StartStage, EndStage, Passengers, Fare, TType, OrderID, OrderTimeStamp) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+					db.query(
+						query,
+						[
+							Num,
+							transData.Id,
+							transData.RouteName,
+							transData.StartStage,
+							transData.EndStage,
+							transData.Passengers,
+							transData.Fare,
+							transData.Ttype,
+							OrderID,
+							orderTimeStamp,
+						],
+						(err, results) => {
+							if (!err) {
+								return res.status(200).json({
+									message: 'OrderID generated',
+									data: { orderid: `${OrderID}` },
+								});
+							} else {
+								return res.status(500).json(err);
+							}
+						}
+					);
+				} else {
+					console.log(err);
+				}
 			}
+		} else {
+			console.log(err);
 		}
-	);
+	});
 };
 
 // update transactionID, Status and Timestamp fields
@@ -101,11 +160,13 @@ exports.getPaymentInfo = (req, res) => {
 //create asset qrcode
 exports.createTransQR = async (req, res) => {
 	const qrstring = req.body;
+	console.log('qrsrting', req.body);
 	const oid = qrstring.orderid;
 	const Tgen = qrstring.Tgen;
 	const qrstatus = 'A';
 
 	const data = JSON.stringify(qrstring);
+	console.log(data);
 
 	//Qrcode using Qr-image
 	const qrCodeData = qr.imageSync(data, { type: 'png' }); // Get the QR code image data as a buffer
@@ -115,6 +176,7 @@ exports.createTransQR = async (req, res) => {
 		'UPDATE tblTransaction SET QR = ?, QRStatus = ?, Tdata = ?, Tgen = ? WHERE OrderID = ?';
 	db.query(query, [QRVal, qrstatus, data, Tgen, oid], (err, result) => {
 		if (!err) {
+			console.log('in', data);
 			res.send(QRVal); // Send the QR code image data as the response
 			return;
 		} else {
@@ -153,6 +215,19 @@ exports.getHistory = async (req, res) => {
 	db.query(query, [uid], (err, results) => {
 		if (!err) {
 			res.json(results);
+		} else {
+			res.send(err);
+		}
+	});
+};
+
+// get last ticket
+exports.getLasTicket = async (req, res) => {
+	let uid = req.body.UserId;
+	var query = 'SELECT Tdata FROM tblTransaction WHERE Id = ?';
+	db.query(query, [uid], (err, results) => {
+		if (!err) {
+			res.json(results[results.length - 1]);
 		} else {
 			res.send(err);
 		}

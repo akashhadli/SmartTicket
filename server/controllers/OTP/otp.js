@@ -84,3 +84,35 @@ const addEAuth = (id) => {
 		}
 	});
 };
+
+exports.forgotPassword = (req, res) => {
+	let forgotData = req.body;
+	let mobile = forgotData.mobile;
+	let query = `SELECT EmpId, EmpMobile, Flag FROM tblEmployee WHERE EmpMobile = ?`;
+	db.query(query, [mobile], (err, results) => {
+		if (!err) {
+			if (results.length > 0) {
+				insertTblOtp(results[0].EmpId, results[0].EmpMobile, results[0].Flag);
+				res.json({ data: { results }, message: 'OTP Generated' });
+			} else {
+				let query1 = `SELECT UserId, Umobile, Flag FROM tblEmployee WHERE Umobile = ?`;
+				db.query(query1, [mobile], (err, results) => {
+					if (!err) {
+						if (results.length > 0) {
+							insertTblOtp(
+								results[0].EmpId,
+								results[0].EmpMobile,
+								results[0].Flag
+							);
+							res.json({ data: { results }, message: 'OTP Generated' });
+						} else {
+							res.send(err);
+						}
+					}
+				});
+			}
+		} else {
+			res.send(err);
+		}
+	});
+};

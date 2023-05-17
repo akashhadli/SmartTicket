@@ -3,6 +3,9 @@ const moment = require('moment');
 
 exports.addType = (req, res) => {
 	let typeData = req.body;
+	let TTduration = JSON.stringify(typeData.ttDuration);
+	console.log(typeData);
+	console.log(TTduration);
 	var query1 = `SELECT Num, TTid FROM tblTicketType ORDER BY Num DESC LIMIT 1`;
 	db.query(query1, (err, result) => {
 		if (!err) {
@@ -14,7 +17,7 @@ exports.addType = (req, res) => {
 				var TTCreatedDate = moment().format('YYYY-MM-DD');
 				if (!err) {
 					var query =
-						'INSERT INTO tblTicketType (Num, TTid, TTname, TTshortname, TTstatus, TTCreatedDate) VALUES(?, ?, ?, ?, ?, ?)';
+						'INSERT INTO tblTicketType (Num, TTid, TTname, TTshortname, TTduration, TTstatus, TTCreatedDate) VALUES(?, ?, ?, ?, ?, ?, ?)';
 					db.query(
 						query,
 						[
@@ -22,6 +25,7 @@ exports.addType = (req, res) => {
 							TTid,
 							typeData.TTname,
 							typeData.TTshortname,
+							TTduration,
 							Status,
 							TTCreatedDate,
 						],
@@ -45,7 +49,7 @@ exports.addType = (req, res) => {
 				tid = tt + 1;
 				if (!err) {
 					var query =
-						'INSERT INTO tblTicketType (Num, TTid, TTname, TTshortname, TTstatus, TTCreatedDate) VALUES(?, ?, ?, ?, ?, ?)';
+						'INSERT INTO tblTicketType (Num, TTid, TTname, TTshortname, TTduration, TTstatus, TTCreatedDate) VALUES(?, ?, ?, ?, ?, ?, ?)';
 					db.query(
 						query,
 						[
@@ -53,6 +57,7 @@ exports.addType = (req, res) => {
 							TTid,
 							typeData.TTname,
 							typeData.TTshortname,
+							TTduration,
 							Status,
 							TTCreatedDate,
 						],
