@@ -117,7 +117,7 @@ const Register = () => {
 
 				if (res1.data.status === 201) {
 					alert('User Successfully Created');
-					setTimeout(() => history('/'), 500);
+					setTimeout(() => history('/signin'), 500);
 				} else {
 					alert('User unable to Register');
 					return;

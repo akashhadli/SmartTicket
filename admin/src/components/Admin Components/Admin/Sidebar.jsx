@@ -197,13 +197,9 @@ const Sidebar = () => {
 					</div>
 				</ul>
 			</div>
-			<div className='opacity-70'>
+			<div className='opacity-70 fixed bottom-28'>
 				<hr />
 				<ul className='p-1'>
-					<li className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'>
-						<AiFillSetting />
-						<span className='ml-1'>Settings</span>
-					</li>
 					<li
 						className='flex justify-start items-center p-2 m-2 rounded-lg text-center hover:bg-pink-300 hover:cursor-pointer'
 						onClick={handlesub}
