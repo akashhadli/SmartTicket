@@ -5,6 +5,7 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import Opersidebar from '../Opersidebar';
 import useIdleTimeout from '../../../useIdleTimeout';
+import Footer from '../../Footer';
 
 const Rutedit = () => {
 	const [RouteName, setRouteName] = useState('');
@@ -248,6 +249,7 @@ const Rutedit = () => {
 					</form>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

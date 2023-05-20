@@ -41,7 +41,7 @@ const RefundsAndCancels = () => {
 						1. Tickets/pass once booked is non-refundable and non-transferrable
 						<br />
 						2. User/commuter/passenger should use the mobile app to register and
-						make purchases from the LekPay app
+						make ticket/pass purchase from the LekPay app
 						<br />
 						3. In case of any fraud detected, LekPay reserves the right to block
 						the user from further using the app and no money will be refunded.
@@ -51,9 +51,9 @@ const RefundsAndCancels = () => {
 					</p>
 					<h1 className='font-semibold text-xl'>Platform fee</h1>
 					<p>
-						We do not charge any platform fees on our App purchase, the charges
-						paid by the users will be completely transferred to the Transport
-						operator account.
+						We do not charge any platform fees for ticket/pass purchase, the
+						charges paid by the users will be completely transferred to the
+						Transport operator account.
 					</p>
 					<p>
 						For any support or query write us at{' '}

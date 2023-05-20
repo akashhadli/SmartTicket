@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Opersidebar from '../Opersidebar';
 import useIdleTimeout from '../../../useIdleTimeout';
+import Footer from '../../Footer';
 
 const Stgedit = () => {
 	const [StageName, setStageName] = useState('');
@@ -150,6 +151,7 @@ const Stgedit = () => {
 					</form>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

@@ -5,6 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import Opersidebar from '../Opersidebar';
 import { useNavigate } from 'react-router-dom';
 import useIdleTimeout from '../../../useIdleTimeout';
+import Footer from '../../Footer';
 
 let arr = [];
 let arr1 = [];
@@ -485,6 +486,7 @@ const RouteStageMap = () => {
 					</form>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

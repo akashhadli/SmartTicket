@@ -6,6 +6,7 @@ import useIdleTimeout from '../../../../useIdleTimeout';
 import { useNavigate } from 'react-router-dom';
 import Opersidebar from '../../Opersidebar';
 import OperHeader from '../OperHeader';
+import Footer from '../../../Footer';
 
 const IndividualTransAssetData = () => {
 	const [data, setData] = useState([]);
@@ -134,6 +135,7 @@ const IndividualTransAssetData = () => {
 					</div>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

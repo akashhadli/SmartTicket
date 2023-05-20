@@ -3,6 +3,7 @@ import axios from 'axios';
 import Opersidebar from '../Opersidebar';
 import { useNavigate } from 'react-router-dom';
 import useIdleTimeout from '../../../useIdleTimeout';
+import Footer from '../../Footer';
 
 const Stageregister = () => {
 	const [StageName, setStageName] = useState('');
@@ -131,6 +132,7 @@ const Stageregister = () => {
 					</form>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

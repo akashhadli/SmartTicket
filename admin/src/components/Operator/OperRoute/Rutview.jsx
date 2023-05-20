@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Opersidebar from '../Opersidebar';
 import useIdleTimeout from '../../../useIdleTimeout';
+import Footer from '../../Footer';
 
 const Rutview = () => {
 	const history = useNavigate();
@@ -171,6 +172,7 @@ const Rutview = () => {
 						  })
 						: ' '}
 				</div>
+				<Footer />
 			</div>
 		</>
 	);

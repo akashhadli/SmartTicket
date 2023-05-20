@@ -6,6 +6,7 @@ import login from '../../assets/login.jpg';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { operRegisterSchema } from '../../schemas';
+import Footer from '../Footer';
 
 const initialValues = {
 	OperName: '',
@@ -334,6 +335,7 @@ const Register = () => {
 					<img src={login} alt='logo' className='w-[500px] h-[600px]' />
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

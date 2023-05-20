@@ -436,6 +436,9 @@ const PivacyPolicy = () => {
 				<p>Powaha Infotech Private Limited</p>
 				<p>
 					14, Chankyapuri, Near Bharat Mill, Hubli-580029, Karnataka, India.
+				</p>
+				<br />
+				<p>
 					Reach out to us on <strong>lekpayinfo@gmail.com</strong> , in case of
 					any queries.
 				</p>

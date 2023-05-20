@@ -6,6 +6,7 @@ import moment from 'moment';
 import Opersidebar from '../Opersidebar';
 import '../../pagination.css';
 import useIdleTimeout from '../../../useIdleTimeout';
+import Footer from '../../Footer';
 
 const Ruttable = () => {
 	const [data, setData] = useState('');
@@ -222,6 +223,7 @@ const Ruttable = () => {
 						</div>
 					</div>
 				</div>
+				<Footer />
 			</div>
 		</>
 	);

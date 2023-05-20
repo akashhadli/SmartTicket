@@ -3,6 +3,7 @@ import Opersidebar from '../Opersidebar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useIdleTimeout from '../../../useIdleTimeout';
+import Footer from '../../Footer';
 
 const Routeregister = () => {
 	const [RouteName, setRouteName] = useState('');
@@ -339,6 +340,7 @@ const Routeregister = () => {
 					</form>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

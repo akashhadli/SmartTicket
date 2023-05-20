@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Opersidebar from '../Opersidebar';
 import useIdleTimeout from '../../../useIdleTimeout';
+import Footer from '../../Footer';
 const Astedit = () => {
 	const [astName, setAstName] = useState('');
 	const [astModel, setAstModel] = useState('');
@@ -254,6 +255,7 @@ const Astedit = () => {
 					</form>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };
