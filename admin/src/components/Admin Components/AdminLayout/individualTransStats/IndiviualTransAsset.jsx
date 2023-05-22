@@ -6,7 +6,6 @@ import { MdOutlineDirectionsBusFilled } from 'react-icons/md';
 import Header from '../Header';
 import Sidebar from '../../Admin/Sidebar';
 import axios from 'axios';
-import Footer from '../../../Footer';
 
 const IndiviualTransAsset = () => {
 	const { OperId } = useParams();
@@ -69,7 +68,7 @@ const IndiviualTransAsset = () => {
 		// Redirect to sign-in page if the user is idle
 		if (isIdle) {
 			window.localStorage.removeItem('Lekpay');
-			history('/');
+			history('/signin');
 		}
 	}, [isIdle, history]);
 
@@ -77,7 +76,7 @@ const IndiviualTransAsset = () => {
 		const token = window.localStorage.getItem('Lekpay');
 		const Token = JSON.parse(token);
 		if (!Token) {
-			history('/');
+			history('/signin');
 		} else {
 			getTransactionAssetData();
 		}
@@ -134,7 +133,6 @@ const IndiviualTransAsset = () => {
 					</div>
 				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 };

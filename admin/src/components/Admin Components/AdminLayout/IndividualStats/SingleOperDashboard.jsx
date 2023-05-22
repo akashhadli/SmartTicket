@@ -7,7 +7,6 @@ import Sidebar from '../../Admin/Sidebar';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../AdminLayout/Header';
 import StatsGrid from '../../AdminLayout/IndividualStats/SingleOperCard/IndividualOperatorCard';
-import Footer from '../../../Footer';
 
 const SingleOperDashboard = () => {
 	const history = useNavigate();
@@ -48,7 +47,7 @@ const SingleOperDashboard = () => {
 		// Redirect to sign-in page if the user is idle
 		if (isIdle) {
 			window.localStorage.removeItem('Lekpay');
-			history('/');
+			history('/signin');
 		}
 	}, [isIdle, history]);
 
@@ -56,7 +55,7 @@ const SingleOperDashboard = () => {
 		const token = window.localStorage.getItem('Lekpay');
 		const Token = JSON.parse(token);
 		if (!Token) {
-			history('/');
+			history('/signin');
 		}
 	}, []);
 
@@ -70,7 +69,6 @@ const SingleOperDashboard = () => {
 					{/* <TransactionChart /> */}
 				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 };

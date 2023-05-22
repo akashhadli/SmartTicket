@@ -6,7 +6,6 @@ import OperHeader from '../Operator/OperLayout/OperHeader';
 import OperStatsGrid from '../Operator/OperLayout/OperStatsGrid';
 // import OperTransactionChart from '../Operator/OperLayout/OperTransactionChart';
 import useIdleTimeout from '../../useIdleTimeout';
-import Footer from '../Footer';
 
 const Operdashboard = () => {
 	const history = useNavigate();
@@ -48,7 +47,7 @@ const Operdashboard = () => {
 		// Redirect to sign-in page if the user is idle
 		if (isIdle) {
 			window.localStorage.removeItem('Lekpay');
-			history('/');
+			history('/signin');
 		}
 	}, [isIdle, history]);
 
@@ -56,7 +55,7 @@ const Operdashboard = () => {
 		const token = window.localStorage.getItem('Lekpay');
 		const Token = JSON.parse(token);
 		if (!Token) {
-			history('/');
+			history('/signin');
 		}
 	});
 
@@ -70,7 +69,6 @@ const Operdashboard = () => {
 					{/* <OperTransactionChart/> */}
 				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 };

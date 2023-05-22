@@ -7,7 +7,6 @@ import Opersidebar from '../Opersidebar';
 import { empRegisterSchema } from '../../../schemas/index';
 import useIdleTimeout from '../../../useIdleTimeout';
 import * as XLSX from 'xlsx';
-import Footer from '../../Footer';
 
 const initialValues = {
 	EmpName: '',
@@ -27,6 +26,8 @@ const Empregister = () => {
 	const [recordsAdded, setRecordsAdded] = useState(0);
 	const [recordsNotAdded, setRecordsNotAdded] = useState(0);
 	const [skippedRecords, setSkippedRecords] = useState([]);
+	const [fileSelected, setFileSelected] = useState(false);
+
 	const history = useNavigate();
 
 	const ID = window.localStorage.getItem('OperID');
@@ -72,6 +73,7 @@ const Empregister = () => {
 	const readExcel = (file) => {
 		const promise = new Promise((resolve, reject) => {
 			const fileReader = new FileReader();
+			setFileSelected(true);
 			fileReader.readAsArrayBuffer(file);
 
 			fileReader.onload = (e) => {
@@ -305,7 +307,7 @@ const Empregister = () => {
 		// Redirect to sign-in page if the user is idle
 		if (isIdle) {
 			window.localStorage.removeItem('Lekpay');
-			history('/');
+			history('/signin');
 		}
 	}, [isIdle, history]);
 
@@ -343,7 +345,7 @@ const Empregister = () => {
 		const token = window.localStorage.getItem('Lekpay');
 		const Token = JSON.parse(token);
 		if (!Token) {
-			history('/');
+			history('/signin');
 		}
 	}, []);
 
@@ -356,7 +358,7 @@ const Empregister = () => {
 						className='max-w-[400px] w-full mx-auto text-sm flex-row'
 						onSubmit={handleSubmit}
 					>
-						<h2 className='text-3xl text-pink-500 text-center py-2'>
+						<h2 className='text-3xl text-pink-500 text-center pb-6'>
 							Employee Register
 						</h2>
 						<div className='flex flex-row py-2'>
@@ -514,10 +516,10 @@ const Empregister = () => {
 							) : null}
 						</div>
 						<button
-							className='border  w-full my-2 py-2 mb-8 text-white bg-pink-500 rounded text-lg hover:bg-pink-400 duration-200'
+							className='border  w-full my-2 py-2  mb-16 text-white bg-pink-500 rounded text-lg hover:bg-pink-400 duration-200'
 							onClick={handleSub}
 						>
-							Register
+							{fileSelected ? 'Submit' : 'Register'}
 						</button>
 					</form>
 				</div>
@@ -538,7 +540,6 @@ const Empregister = () => {
 					/>
 				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 };

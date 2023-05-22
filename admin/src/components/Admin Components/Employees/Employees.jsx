@@ -6,7 +6,6 @@ import moment from 'moment';
 import Sidebar from '../Admin/Sidebar';
 import '../../pagination.css';
 import useIdleTimeout from '../../../useIdleTimeout';
-import Footer from '../../Footer';
 
 const Employees = () => {
 	const [data, setData] = useState('');
@@ -86,7 +85,7 @@ const Employees = () => {
 		// Redirect to sign-in page if the user is idle
 		if (isIdle) {
 			window.localStorage.removeItem('Lekpay');
-			history('/');
+			history('/signin');
 		}
 	}, [isIdle, history]);
 
@@ -94,7 +93,7 @@ const Employees = () => {
 		const token = window.localStorage.getItem('Lekpay');
 		const Token = JSON.parse(token);
 		if (!Token) {
-			history('/');
+			history('/signin');
 		} else {
 			getEmployeesData();
 		}
@@ -218,7 +217,6 @@ const Employees = () => {
 						</div>
 					</div>
 				</div>
-				<Footer />
 			</div>
 		</>
 	);

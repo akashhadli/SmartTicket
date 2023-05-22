@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Sidebar from '../Admin/Sidebar';
 import useIdleTimeout from '../../../useIdleTimeout';
-import Footer from '../../Footer';
 
 const ViewOperator = () => {
 	const [data, setData] = useState([]);
@@ -58,7 +57,7 @@ const ViewOperator = () => {
 		// Redirect to sign-in page if the user is idle
 		if (isIdle) {
 			window.localStorage.removeItem('Lekpay');
-			history('/');
+			history('/signin');
 		}
 	}, [isIdle, history]);
 
@@ -66,7 +65,7 @@ const ViewOperator = () => {
 		const token = window.localStorage.getItem('Lekpay');
 		const Token = JSON.parse(token);
 		if (!Token) {
-			history('/');
+			history('/signin');
 		} else {
 			getSingleOperatorData();
 		}
@@ -161,7 +160,6 @@ const ViewOperator = () => {
 						  })
 						: ' '}
 				</div>
-				<Footer />
 			</div>
 		</>
 	);

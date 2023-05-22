@@ -5,7 +5,6 @@ import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Sidebar from '../Admin/Sidebar';
 import useIdleTimeout from '../../../useIdleTimeout';
-import Footer from '../../Footer';
 
 const Operview = () => {
 	const history = useNavigate();
@@ -69,7 +68,7 @@ const Operview = () => {
 		// Redirect to sign-in page if the user is idle
 		if (isIdle) {
 			window.localStorage.removeItem('Lekpay');
-			history('/');
+			history('/signin');
 		}
 	}, [isIdle, history]);
 
@@ -77,7 +76,7 @@ const Operview = () => {
 		const token = window.localStorage.getItem('Lekpay');
 		const Token = JSON.parse(token);
 		if (!Token) {
-			history('/');
+			history('/signin');
 		} else {
 			getUserData();
 		}
@@ -180,7 +179,6 @@ const Operview = () => {
 						  })
 						: ' '}
 				</div>
-				<Footer />
 			</div>
 		</>
 	);

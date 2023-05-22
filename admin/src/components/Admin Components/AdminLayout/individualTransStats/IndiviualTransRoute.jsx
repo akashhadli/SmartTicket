@@ -6,7 +6,6 @@ import Sidebar from '../../Admin/Sidebar';
 import useIdleTimeout from '../../../../useIdleTimeout';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Footer from '../../../Footer';
 
 const IndiviualTransRoute = () => {
 	const { AstId } = useParams();
@@ -63,7 +62,7 @@ const IndiviualTransRoute = () => {
 		// Redirect to sign-in page if the user is idle
 		if (isIdle) {
 			window.localStorage.removeItem('Lekpay');
-			history('/');
+			history('/signin');
 		}
 	}, [isIdle, history]);
 
@@ -71,7 +70,7 @@ const IndiviualTransRoute = () => {
 		const token = window.localStorage.getItem('Lekpay');
 		const Token = JSON.parse(token);
 		if (!Token) {
-			history('/');
+			history('/signin');
 		} else {
 			getRouteByAssetID();
 		}
@@ -125,7 +124,6 @@ const IndiviualTransRoute = () => {
 					</div>
 				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 };
